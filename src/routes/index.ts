@@ -1,7 +1,9 @@
 export const PUBLIC_PATHS = {
   home: "/",
-  privacy: "/privacy",
-  terms: "/terms",
+  privacy: "/legal/privacy",
+  terms: "/legal/terms",
+  contact: "/legal/contact",
+  license: "/legal/license",
   tools: "/tools",
   gitHubRepo: "https://github.com/ahmad-junior/flags-dev",
 };
