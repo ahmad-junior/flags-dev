@@ -1,0 +1,14 @@
+name: Functional Testing Runner
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  functional_testing:
+    name: Functional Testing
+    uses: ./.github/workflows/build.yml
