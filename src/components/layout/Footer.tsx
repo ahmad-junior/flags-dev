@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { STATIC_PATHS } from "@/routes";
 import { FaGithub } from "react-icons/fa";
+
+import { STATIC_PATHS } from "@/routes";
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
         <div className="max-w-2xl">
           <Link
             href={STATIC_PATHS.home}
-            className="text-xl font-semibold tracking-tight text-slate-900"
+            className="text-xl font-semibold tracking-tight text-slate-900 transition-colors hover:text-blue-600"
           >
             FlagsDev
           </Link>
@@ -20,10 +21,10 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-col-reverse items-center justify-between gap-3 pt-1 text-sm text-slate-500 md:flex-row">
+        <div className="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 md:flex-row">
           <p>© {new Date().getFullYear()} FlagsDev. Built for the open web.</p>
 
-          <nav className="flex items-center gap-6">
+          <nav className="flex flex-wrap items-center justify-center gap-6">
             <Link
               href={STATIC_PATHS.privacy}
               className="transition-colors hover:text-slate-900"
@@ -38,13 +39,28 @@ export default function Footer() {
               Terms
             </Link>
 
+            <Link
+              href={STATIC_PATHS.license}
+              className="transition-colors hover:text-slate-900"
+            >
+              License
+            </Link>
+
+            <Link
+              href={STATIC_PATHS.contact}
+              className="transition-colors hover:text-slate-900"
+            >
+              Contact
+            </Link>
+
             <a
               href={STATIC_PATHS.gitHubRepo}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-slate-900 text-xl"
+              aria-label="GitHub Repository"
+              className="text-xl transition-colors hover:text-slate-900"
             >
-              <FaGithub></FaGithub>
+              <FaGithub />
             </a>
           </nav>
         </div>
