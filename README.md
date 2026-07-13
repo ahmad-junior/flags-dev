@@ -1,6 +1,6 @@
 # Flags Dev
 
-[Flags Dev](flagsdev.com)
+[Flags Dev](https://flagsdev.com)
 
 ## Overview
 
