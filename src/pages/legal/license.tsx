@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import CustomTopHeader from "@/components/layout/CustomTopHeader";
 
 const LAST_UPDATED_LICENCE = "12 - July - 2026";
 
@@ -11,11 +12,8 @@ export default function LicensePage() {
       />
 
       <main className="mx-auto max-w-4xl px-6 py-20">
+        <CustomTopHeader title="License" />
         <div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
-            License
-          </h1>
-
           <p className="mt-4 text-slate-600">
             Last updated: {LAST_UPDATED_LICENCE}
           </p>
