@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import { STATIC_PATHS } from "@/routes";
+import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import Link from "next/link";
 
 const LAST_UPDATE_TERMS = "12 - July - 2026";
@@ -13,9 +14,7 @@ export default function TermsPage() {
       />
 
       <main className="mx-auto max-w-4xl px-6 py-20">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-          Terms of Service
-        </h1>
+        <CustomTopHeader title="Terms of Service" />
 
         <p className="mt-4 text-slate-600">Last updated: {LAST_UPDATE_TERMS}</p>
 

@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import { STATIC_PATHS } from "@/routes";
+import CustomTopHeader from "@/components/layout/CustomTopHeader";
 
 import { FaGithub, FaEnvelope, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 
@@ -12,6 +13,7 @@ export default function ContactPage() {
       />
 
       <main className="mx-auto max-w-5xl px-6 py-20">
+        <CustomTopHeader title="Contact" />
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900">
             We&apos;d love to hear from you
@@ -25,13 +27,12 @@ export default function ContactPage() {
 
         <div className="mt-16 grid gap-6 md:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-100">
-              <FaGithub className="text-2xl text-slate-900" />
-            </div>
-
-            <h2 className="mt-6 text-xl font-semibold text-slate-900">
-              GitHub
-            </h2>
+            <CustomTopHeader
+              title="GitHub"
+              icon={FaGithub}
+              hoverText="Github"
+              textSize={2}
+            />
 
             <p className="mt-3 text-slate-600">
               Report bugs, request features, or contribute to the project.
@@ -48,11 +49,12 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-red-50">
-              <FaEnvelope className="text-2xl text-red-600" />
-            </div>
-
-            <h2 className="mt-6 text-xl font-semibold text-slate-900">Email</h2>
+            <CustomTopHeader
+              title="Email"
+              icon={FaEnvelope}
+              hoverText="Email"
+              textSize={2}
+            />
 
             <p className="mt-3 text-slate-600">
               Contact us for business inquiries or general questions.
@@ -67,13 +69,12 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-green-50">
-              <FaWhatsapp className="text-2xl text-green-600" />
-            </div>
-
-            <h2 className="mt-6 text-xl font-semibold text-slate-900">
-              WhatsApp
-            </h2>
+            <CustomTopHeader
+              title="WhatsApp"
+              icon={FaWhatsapp}
+              hoverText="WhatsApp"
+              textSize={2}
+            />
 
             <p className="mt-3 text-slate-600">
               Contact us directly for quick questions or collaboration.
@@ -90,11 +91,12 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-50">
-              <FaPhoneAlt className="text-2xl text-blue-600" />
-            </div>
-
-            <h2 className="mt-6 text-xl font-semibold text-slate-900">Phone</h2>
+            <CustomTopHeader
+              title="Phone"
+              icon={FaPhoneAlt}
+              hoverText="Phone"
+              textSize={2}
+            />
 
             <p className="mt-3 text-slate-600">
               Available during normal business hours (Pakistan Time).
