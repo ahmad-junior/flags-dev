@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import { ComponentType } from "react";
 
 export interface ToolFeature {
   title: string;
@@ -12,7 +12,7 @@ export interface ToolFaq {
 
 export interface ToolContributor {
   name: string;
-  role: "Creator" | "Maintainer" | "Contributor";
+  role: string;
   email?: string;
 }
 
@@ -21,7 +21,7 @@ export interface ToolDefinition {
   title: string;
   description: string;
   category: string;
-  icon: IconType;
+  icon: ComponentType<{ className?: string }>;
 
   badges?: string[];
 

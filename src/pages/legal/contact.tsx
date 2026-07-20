@@ -29,6 +29,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <CustomTopHeader
               title="GitHub"
+              homeHref=""
               icon={FaGithub}
               hoverText="Github"
               textSize={2}
@@ -51,6 +52,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <CustomTopHeader
               title="Email"
+              homeHref=""
               icon={FaEnvelope}
               hoverText="Email"
               textSize={2}
@@ -71,6 +73,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <CustomTopHeader
               title="WhatsApp"
+              homeHref=""
               icon={FaWhatsapp}
               hoverText="WhatsApp"
               textSize={2}
@@ -93,6 +96,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
             <CustomTopHeader
               title="Phone"
+              homeHref=""
               icon={FaPhoneAlt}
               hoverText="Phone"
               textSize={2}

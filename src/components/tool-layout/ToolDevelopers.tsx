@@ -47,7 +47,9 @@ export default function ToolDevelopers({ tool }: Props) {
 
                   <p className="text-sm text-slate-500">{person.role}</p>
 
-                  <p className="text-sm text-slate-500">{person?.email}</p>
+                  <p className="text-sm text-slate-500">
+                    Email: {person?.email ?? "Not available"}
+                  </p>
                 </div>
               </div>
             ))}

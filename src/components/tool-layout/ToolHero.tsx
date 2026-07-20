@@ -11,7 +11,7 @@ export default function ToolHero({ tool }: Props) {
     <section className="bg-white">
       <div className="mx-auto flex max-w-7xl items-start gap-5 px-6 py-10">
         <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-600 text-white">
-          <Icon size={24} />
+          <Icon />
         </div>
 
         <div>
