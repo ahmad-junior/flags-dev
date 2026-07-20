@@ -16,6 +16,12 @@ export interface ToolContributor {
   email?: string;
 }
 
+export interface ToolTab {
+  id: string;
+  label: string;
+  icon: ComponentType<{ className?: string }>;
+}
+
 export interface ToolDefinition {
   slug: string;
   title: string;
