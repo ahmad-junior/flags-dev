@@ -1,4 +1,6 @@
 import { Lock, ShieldCheck, Globe, FileCheck } from "lucide-react";
+import Link from "next/link";
+import { STATIC_PATHS } from "@/routes";
 
 const securityFeatures = [
   {
@@ -41,9 +43,15 @@ export default function Security() {
           </h2>
 
           <p className="mt-6 text-lg leading-8 text-slate-600">
-            We believe file tools should be secure by default. FlagsDev keeps
-            your documents on your device while using modern web standards to
-            protect every connection.
+            We believe file tools should be secure by default.
+            <Link
+              href={STATIC_PATHS.home}
+              className="font-semibold text-slate-900 transition-colors hover:text-blue-600"
+            >
+              FlagsDev
+            </Link>{" "}
+            keeps your documents on your device while using modern web standards
+            to protect every connection.
           </p>
         </div>
 
@@ -64,7 +72,7 @@ export default function Security() {
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-slate-600">
+                <p className="mt-3 text-sm leading-6 text-slate-600 text-justify">
                   {feature.description}
                 </p>
               </div>
