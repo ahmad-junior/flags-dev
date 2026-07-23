@@ -70,7 +70,7 @@ export default function Trust() {
                 {feature.title}
               </h3>
 
-              <p className="mt-3 text-sm leading-6 text-slate-600">
+              <p className="mt-3 text-sm leading-6 text-slate-600 text-justify">
                 {feature.description}
               </p>
             </div>
