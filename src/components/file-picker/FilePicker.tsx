@@ -86,6 +86,7 @@ export default function FilePicker({
         files={files}
         emptyLabel={config.emptyStateLabel}
         onRemove={removeFile}
+        onReorder={onChange}
       />
     </div>
   );
