@@ -49,10 +49,32 @@ export default function FileCard({
         )}
 
         <button
+          type="button"
           onClick={() => onRemove(file.id)}
-          className="absolute right-3 top-3 rounded-xl bg-white/90 p-2 text-slate-600 shadow transition hover:bg-red-50 hover:text-red-600"
+          className="
+        group absolute right-3 top-3
+        flex cursor-pointer items-center gap-2
+        rounded-xl bg-white/90 p-2
+        text-slate-600 shadow
+        backdrop-blur
+        transition-all duration-200
+        hover:bg-red-50 hover:text-red-600
+    "
         >
-          <Trash2 className="h-5 w-5 cursor-pointer" />
+          <Trash2 className="h-5 w-5 shrink-0" />
+
+          <span
+            className="
+            max-w-0 overflow-hidden whitespace-nowrap
+            text-sm font-medium
+            opacity-0
+            transition-all duration-200
+            group-hover:max-w-20
+            group-hover:opacity-100
+        "
+          >
+            Remove
+          </span>
         </button>
       </div>
 

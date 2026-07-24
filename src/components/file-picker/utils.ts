@@ -4,15 +4,38 @@ import {
   ValidationResult,
 } from "@/components/file-picker/types";
 
-export function createFiles(files: File[]): AppFile[] {
-  return files.map((file) => ({
-    id: crypto.randomUUID(),
-    file,
-    name: file.name,
-    size: file.size,
-    type: file.type,
-    extension: file.name.split(".").pop()?.toLowerCase() ?? "",
-  }));
+import { createPreview } from "./preview";
+
+export async function createFiles(files: File[]): Promise<AppFile[]> {
+  return Promise.all(
+    files.map(async (file) => {
+      const preview = await createPreview(file);
+
+      return {
+        id: crypto.randomUUID(),
+
+        file,
+
+        name: file.name,
+
+        size: file.size,
+
+        type: file.type,
+
+        extension: file.name.split(".").pop()?.toLowerCase() ?? "",
+
+        previewUrl: preview.previewUrl,
+
+        metadata: preview.metadata,
+      };
+    }),
+  );
+}
+
+export function revokePreview(file: AppFile) {
+  if (file.previewUrl?.startsWith("blob:")) {
+    URL.revokeObjectURL(file.previewUrl);
+  }
 }
 
 export function formatBytes(bytes: number) {
