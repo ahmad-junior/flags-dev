@@ -11,6 +11,7 @@ import {
   getTotalSize,
   removeDuplicates,
   validateFiles,
+  revokePreview,
 } from "@/components/file-picker/utils";
 
 import { FilePickerProps } from "@/components/file-picker/types";
@@ -20,14 +21,16 @@ export default function FilePicker({
   config,
   onChange,
 }: FilePickerProps) {
-  function addFiles(selected: File[]) {
+  async function addFiles(selected: File[]) {
     const result = validateFiles(selected, config);
 
     result.errors.forEach((error) => toast.error(error));
 
-    if (!result.valid.length) return;
+    if (!result.valid.length) {
+      return;
+    }
 
-    const mapped = createFiles(result.valid);
+    const mapped = await createFiles(result.valid);
 
     if (!config.multiple) {
       onChange(mapped.slice(0, 1));
@@ -40,6 +43,12 @@ export default function FilePicker({
   }
 
   function removeFile(id: string) {
+    const file = files.find((file) => file.id === id);
+
+    if (file) {
+      revokePreview(file);
+    }
+
     onChange(files.filter((file) => file.id !== id));
   }
 

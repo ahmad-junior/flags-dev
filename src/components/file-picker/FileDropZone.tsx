@@ -58,7 +58,7 @@ export default function FileDropZone({
           handleFiles(event.dataTransfer.files);
         }}
         className={clsx(
-          "flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed px-8 py-14 transition-all duration-200",
+          "flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed px-8 py-14 transition-all duration-200 cursor-pointer",
           dragging
             ? "border-green-500 bg-green-50"
             : "border-slate-300 hover:border-green-500 hover:bg-slate-50",
