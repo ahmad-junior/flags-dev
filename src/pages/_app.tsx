@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import SEO from "@/components/SEO";
 import { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 import Footer from "@/components/layout/Footer";
 
@@ -27,6 +28,14 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         {getLayout(<Component {...pageProps} />)}
       </main>
 
+      <Toaster
+        position="top-right"
+        richColors
+        closeButton
+        duration={4000}
+        visibleToasts={4}
+        expand={false}
+      />
       <Footer />
     </>
   );
