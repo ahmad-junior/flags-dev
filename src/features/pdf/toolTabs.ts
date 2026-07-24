@@ -2,7 +2,7 @@ import {
   Combine,
   // Scissors,
   // Minimize2,
-  // ArrowUpDown,
+  ArrowUpDown,
   // RotateCw,
   // Trash2,
   // FileOutput,
@@ -29,11 +29,11 @@ export const pdfToolTabs: ToolTab[] = [
   //     label: "Compress",
   //     icon: Minimize2,
   // },
-  // {
-  //     id: "reorder",
-  //     label: "Reorder",
-  //     icon: ArrowUpDown,
-  // },
+  {
+    id: "reorder",
+    label: "Reorder",
+    icon: ArrowUpDown,
+  },
   // {
   //     id: "rotate",
   //     label: "Rotate",
