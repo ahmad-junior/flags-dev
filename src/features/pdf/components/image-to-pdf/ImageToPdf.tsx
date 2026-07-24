@@ -9,7 +9,7 @@ import { AppFile } from "@/components/file-picker/types";
 
 import ImageToPdfActions from "@/features/pdf/components/image-to-pdf/ImageToPdfActions";
 
-import { imageToPdf } from "@/features/pdf/components/image-to-pdf/imageToPdf";
+import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf";
 
 export default function ImageToPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);

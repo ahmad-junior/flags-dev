@@ -13,7 +13,7 @@ import { PDF_TOOL_VIEWS } from "@/features/pdf/components/toolViews";
 export default function Page() {
   const router = useRouter();
 
-  const defaultTab = pdfToolTabs[0].id;
+  const defaultTab = "";
 
   const [activeTab, setActiveTab] = useState(defaultTab);
 
