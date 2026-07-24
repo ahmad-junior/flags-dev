@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-
+import { useMemo, useRef, useCallback } from "react";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import FileDropZone from "@/components/file-picker/FileDropZone";
@@ -21,64 +21,116 @@ export default function FilePicker({
   config,
   onChange,
 }: FilePickerProps) {
-  async function addFiles(selected: File[]) {
-    const result = validateFiles(selected, config);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-    result.errors.forEach((error) => toast.error(error));
+  const openFilePicker = useCallback(() => {
+    inputRef.current?.click();
+  }, []);
 
-    if (!result.valid.length) {
-      return;
-    }
+  const addFiles = useCallback(
+    async (selected: File[]) => {
+      if (!selected.length) return;
 
-    const mapped = await createFiles(result.valid);
+      const result = validateFiles(selected, config);
 
-    if (!config.multiple) {
-      onChange(mapped.slice(0, 1));
-      return;
-    }
+      result.errors.forEach((error) => toast.error(error));
 
-    const unique = removeDuplicates(files, mapped);
+      if (!result.valid.length) return;
 
-    onChange([...files, ...unique]);
-  }
+      const mapped = await createFiles(result.valid);
 
-  function removeFile(id: string) {
-    const file = files.find((file) => file.id === id);
+      if (!config.multiple) {
+        files.forEach(revokePreview);
+        onChange(mapped.slice(0, 1));
+        return;
+      }
 
-    if (file) {
-      revokePreview(file);
-    }
+      const unique = removeDuplicates(files, mapped);
 
-    onChange(files.filter((file) => file.id !== id));
-  }
+      const uniqueIds = new Set(unique.map((f) => f.id));
+      mapped.forEach((f) => {
+        if (!uniqueIds.has(f.id)) revokePreview(f);
+      });
 
-  function clearFiles() {
+      onChange([...files, ...unique]);
+    },
+    [config, files, onChange],
+  );
+
+  const removeFile = useCallback(
+    (id: string) => {
+      const targetFile = files.find((file) => file.id === id);
+      if (targetFile) {
+        revokePreview(targetFile);
+      }
+      onChange(files.filter((file) => file.id !== id));
+    },
+    [files, onChange],
+  );
+
+  const clearFiles = useCallback(() => {
+    files.forEach(revokePreview);
     onChange([]);
-  }
+  }, [files, onChange]);
 
   const totalSize = useMemo(() => getTotalSize(files), [files]);
 
   return (
-    <div className="space-y-6">
-      <FileDropZone config={config} onFilesSelected={addFiles} />
+    <div className="w-full space-y-4">
+      <input
+        ref={inputRef}
+        type="file"
+        aria-label="Upload files"
+        className="sr-only"
+        multiple={config.multiple}
+        accept={config.accept}
+        onChange={(e) => {
+          addFiles(Array.from(e.target.files ?? []));
+          e.target.value = "";
+        }}
+      />
+
+      {files.length === 0 && (
+        <FileDropZone config={config} onFilesSelected={addFiles} />
+      )}
 
       {files.length > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
-          <span className="text-sm text-slate-600">
-            <strong>{files.length}</strong> file
-            {files.length > 1 && "s"}
-          </span>
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-xs backdrop-blur-xs">
+          <div className="flex items-center gap-4 text-sm text-slate-600">
+            <span className="font-medium">
+              <strong className="font-semibold text-slate-900">
+                {files.length}
+              </strong>{" "}
+              {files.length === 1 ? "file" : "files"}
+            </span>
 
-          <span className="text-sm text-slate-600">
-            {formatBytes(totalSize)}
-          </span>
+            <span className="h-4 w-px bg-slate-200" aria-hidden="true" />
 
-          <button
-            onClick={clearFiles}
-            className="rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
-          >
-            Clear All
-          </button>
+            <span className="font-mono text-xs font-medium text-slate-500">
+              {formatBytes(totalSize)}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {config.multiple && (
+              <button
+                type="button"
+                onClick={openFilePicker}
+                className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-emerald-200 bg-white px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-2xs transition hover:border-emerald-300 hover:bg-emerald-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 active:scale-[0.98]"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Add Files
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={clearFiles}
+              className="cursor-pointer rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-600 shadow-2xs transition hover:border-red-300 hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 active:scale-[0.98]"
+            >
+              Clear All
+            </button>
+          </div>
         </div>
       )}
 
