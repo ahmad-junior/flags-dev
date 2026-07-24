@@ -66,7 +66,7 @@ export default function FilePicker({
 
           <button
             onClick={clearFiles}
-            className="rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 transition hover:bg-red-50"
+            className="rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
           >
             Clear All
           </button>
