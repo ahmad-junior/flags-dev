@@ -9,7 +9,7 @@ import {
   // Lock,
   // LockOpen,
   // FileImage,
-  // Images,
+  Images,
 } from "lucide-react";
 import { ToolTab } from "@/components/tool-layout/types";
 
@@ -64,9 +64,9 @@ export const pdfToolTabs: ToolTab[] = [
   //     label: "PDF → Image",
   //     icon: FileImage,
   // },
-  // {
-  //     id: "image-to-pdf",
-  //     label: "Image → PDF",
-  //     icon: Images,
-  // },
+  {
+    id: "image-to-pdf",
+    label: "Image → PDF",
+    icon: Images,
+  },
 ];
