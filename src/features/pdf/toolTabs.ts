@@ -4,7 +4,7 @@ import {
   // Minimize2,
   ArrowUpDown,
   // RotateCw,
-  // Trash2,
+  Trash2,
   // FileOutput,
   // Lock,
   // LockOpen,
@@ -39,11 +39,11 @@ export const pdfToolTabs: ToolTab[] = [
   //     label: "Rotate",
   //     icon: RotateCw,
   // },
-  // {
-  //     id: "delete",
-  //     label: "Delete Pages",
-  //     icon: Trash2,
-  // },
+  {
+    id: "delete",
+    label: "Delete Pages",
+    icon: Trash2,
+  },
   // {
   //     id: "extract",
   //     label: "Extract",
