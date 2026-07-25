@@ -1,6 +1,16 @@
 import { AppFile } from "@/components/file-picker/types";
 
-export async function makePagesFromPdf(file: File): Promise<AppFile[]> {
+export interface MakePagesOptions {
+  dpi?: string;
+  format?: "png" | "jpg" | "webp";
+  transparentBg?: boolean;
+  pageIndices?: number[];
+}
+
+export async function makePagesFromPdf(
+  file: File,
+  options: MakePagesOptions = {},
+): Promise<AppFile[]> {
   const pdfjsLib = await import("pdfjs-dist");
 
   pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -14,14 +24,31 @@ export async function makePagesFromPdf(file: File): Promise<AppFile[]> {
     data: bytes,
   }).promise;
 
+  const targetDpi = parseInt(options.dpi || "150", 10);
+  const scale = targetDpi / 72;
+
+  const format = options.format || "png";
+  const mimeType = format === "jpg" ? "image/jpeg" : `image/${format}`;
+  const transparentBg =
+    format === "jpg" ? false : (options.transparentBg ?? false);
+
   const pages: AppFile[] = [];
 
-  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+  let targetPages: number[] = [];
+  if (options.pageIndices && options.pageIndices.length > 0) {
+    targetPages = options.pageIndices
+      .map((idx) => idx + 1)
+      .filter((p) => p >= 1 && p <= pdf.numPages);
+  } else {
+    for (let i = 1; i <= pdf.numPages; i++) {
+      targetPages.push(i);
+    }
+  }
+
+  for (const pageNumber of targetPages) {
     const page = await pdf.getPage(pageNumber);
 
-    const viewport = page.getViewport({
-      scale: 2,
-    });
+    const viewport = page.getViewport({ scale });
 
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -33,6 +60,11 @@ export async function makePagesFromPdf(file: File): Promise<AppFile[]> {
     canvas.width = viewport.width;
     canvas.height = viewport.height;
 
+    if (!transparentBg) {
+      context.fillStyle = "#ffffff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     await page.render({
       canvas,
       canvasContext: context,
@@ -40,19 +72,21 @@ export async function makePagesFromPdf(file: File): Promise<AppFile[]> {
     }).promise;
 
     const blob = await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob((blob) => {
-        if (!blob) {
-          reject(new Error("Failed to create page image."));
-          return;
-        }
-
-        resolve(blob);
-      }, "image/png");
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Failed to create page image."));
+            return;
+          }
+          resolve(blob);
+        },
+        mimeType,
+        0.92,
+      );
     });
 
-    const imageFile = new File([blob], `page-${pageNumber}.png`, {
-      type: "image/png",
-    });
+    const fileName = `page-${pageNumber}.${format}`;
+    const imageFile = new File([blob], fileName, { type: mimeType });
     const preview = URL.createObjectURL(blob);
 
     pages.push({
@@ -61,7 +95,7 @@ export async function makePagesFromPdf(file: File): Promise<AppFile[]> {
       name: imageFile.name,
       size: imageFile.size,
       type: imageFile.type,
-      extension: "png",
+      extension: format,
       previewUrl: preview,
     });
   }
