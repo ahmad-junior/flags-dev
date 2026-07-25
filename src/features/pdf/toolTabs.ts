@@ -6,8 +6,8 @@ import {
   // RotateCw,
   Trash2,
   // FileOutput,
-  // Lock,
-  // LockOpen,
+  Lock,
+  LockOpen,
   FileImage,
   Images,
 } from "lucide-react";
@@ -49,16 +49,16 @@ export const pdfToolTabs: ToolTab[] = [
   //     label: "Extract",
   //     icon: FileOutput,
   // },
-  // {
-  //     id: "protect",
-  //     label: "Protect",
-  //     icon: Lock,
-  // },
-  // {
-  //     id: "unlock",
-  //     label: "Unlock",
-  //     icon: LockOpen,
-  // },
+  {
+    id: "protect",
+    label: "Protect",
+    icon: Lock,
+  },
+  {
+    id: "unlock",
+    label: "Unlock",
+    icon: LockOpen,
+  },
   {
     id: "pdf-to-image",
     label: "PDF → Image",

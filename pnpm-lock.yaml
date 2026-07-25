@@ -16,6 +16,12 @@ importers:
       "@dnd-kit/utilities":
         specifier: ^3.2.2
         version: 3.2.2(react@19.2.4)
+      "@pdfsmaller/pdf-decrypt":
+        specifier: ^1.0.1
+        version: 1.0.1(pdf-lib@1.17.1)
+      "@pdfsmaller/pdf-encrypt":
+        specifier: ^1.0.2
+        version: 1.0.2(pdf-lib@1.17.1)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -859,6 +865,24 @@ packages:
       {
         integrity: sha512-dQK2FUMQtowVP00mtIksrlZhdFXQZPC+taih1q4CvPZ5vqdxR/LKBaFg0oAfzd1GlHZXXSPdQfzQnt+ViGvEIQ==,
       }
+
+  "@pdfsmaller/pdf-decrypt@1.0.1":
+    resolution:
+      {
+        integrity: sha512-UO5KyC+jvcXPTuxfTcEDODHBqO5+YFyuYz/f8tQfiRw5hqZTYTh0ea72OjGw6kuYEUiCyT+A/Ymg2A948Vwx0w==,
+      }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      pdf-lib: ^1.17.1
+
+  "@pdfsmaller/pdf-encrypt@1.0.2":
+    resolution:
+      {
+        integrity: sha512-F+gEftljSsEV3Zh+6XY0Q7garrRJlVMgomqGJDC+L5RIFpHyMZ0pQX0RPoN3JXn25BGd13T/62b6W3+mrxOkTw==,
+      }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      pdf-lib: ^1.17.1
 
   "@rtsao/scc@1.1.0":
     resolution:
@@ -4023,6 +4047,14 @@ snapshots:
   "@pdf-lib/upng@1.0.1":
     dependencies:
       pako: 1.0.11
+
+  "@pdfsmaller/pdf-decrypt@1.0.1(pdf-lib@1.17.1)":
+    dependencies:
+      pdf-lib: 1.17.1
+
+  "@pdfsmaller/pdf-encrypt@1.0.2(pdf-lib@1.17.1)":
+    dependencies:
+      pdf-lib: 1.17.1
 
   "@rtsao/scc@1.1.0": {}
 
