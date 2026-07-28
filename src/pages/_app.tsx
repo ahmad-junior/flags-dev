@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
@@ -23,7 +24,13 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <SEO />
-
+      <Script
+        id="adsense-script"
+        async
+        strategy="afterInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5501202176561362"
+        crossOrigin="anonymous"
+      />
       <main className="min-h-screen flex flex-col">
         {getLayout(<Component {...pageProps} />)}
       </main>
