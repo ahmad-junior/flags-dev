@@ -1,4 +1,5 @@
 import SEO from "@/components/SEO";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import ToolGrid from "@/components/tools/ToolGrid";
 import { tools } from "@/constants/tools";
@@ -71,6 +72,7 @@ export default function ToolsPage() {
           <ToolGrid tools={tools} />
         </section>
       </main>
+      <AdsenseAd />
     </>
   );
 }

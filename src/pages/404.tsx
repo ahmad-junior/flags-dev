@@ -2,6 +2,7 @@ import Link from "next/link";
 import { TbError404Off } from "react-icons/tb";
 import { STATIC_PATHS } from "@/routes/index";
 import SEO from "@/components/SEO";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 
 const Custom404 = () => {
   return (
@@ -27,6 +28,7 @@ const Custom404 = () => {
           Go to Home
         </Link>
       </div>
+      <AdsenseAd />
     </>
   );
 };
