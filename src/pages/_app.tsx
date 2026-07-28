@@ -9,7 +9,6 @@ import { ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import Footer from "@/components/layout/Footer";
-
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactNode) => ReactNode;
 };

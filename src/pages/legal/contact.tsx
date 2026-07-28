@@ -127,8 +127,10 @@ export default function ContactPage() {
             vary depending on availability.
           </p>
         </div>
-        <AdsenseAd />
       </main>
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 }
