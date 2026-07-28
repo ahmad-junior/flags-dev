@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 
 const LAST_UPDATE_PRIVACY = "12 - July - 2026";
 
@@ -80,6 +81,7 @@ export default function PrivacyPage() {
           </p>
         </div>
       </main>
+      <AdsenseAd />
     </>
   );
 }

@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import Link from "next/link";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 
 const LAST_UPDATE_TERMS = "12 - July - 2026";
 
@@ -82,6 +83,7 @@ export default function TermsPage() {
           </p>
         </div>
       </main>
+      <AdsenseAd />
     </>
   );
 }

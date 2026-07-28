@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 
 const LAST_UPDATED_LICENCE = "12 - July - 2026";
 
@@ -63,6 +64,7 @@ export default function LicensePage() {
           </p>
         </div>
       </main>
+      <AdsenseAd />
     </>
   );
 }

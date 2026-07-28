@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import { STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 
 import { FaGithub, FaEnvelope, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 
@@ -126,6 +127,7 @@ export default function ContactPage() {
             vary depending on availability.
           </p>
         </div>
+        <AdsenseAd />
       </main>
     </>
   );
