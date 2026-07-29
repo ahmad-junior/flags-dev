@@ -3,7 +3,7 @@ import {
   // Scissors,
   // Minimize2,
   ArrowUpDown,
-  // RotateCw,
+  RotateCw,
   Trash2,
   // FileOutput,
   Lock,
@@ -34,11 +34,11 @@ export const pdfToolTabs: ToolTab[] = [
     label: "Reorder",
     icon: ArrowUpDown,
   },
-  // {
-  //     id: "rotate",
-  //     label: "Rotate",
-  //     icon: RotateCw,
-  // },
+  {
+    id: "rotate",
+    label: "Rotate",
+    icon: RotateCw,
+  },
   {
     id: "delete",
     label: "Delete Pages",

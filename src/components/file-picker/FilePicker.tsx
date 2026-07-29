@@ -20,6 +20,7 @@ export default function FilePicker({
   files,
   config,
   onChange,
+  renderActions,
 }: FilePickerProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -139,6 +140,7 @@ export default function FilePicker({
         emptyLabel={config.emptyStateLabel}
         onRemove={removeFile}
         onReorder={onChange}
+        actions={renderActions}
       />
     </div>
   );

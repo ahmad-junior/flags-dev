@@ -5,6 +5,7 @@ import DeletePdf from "@/features/pdf/components/delete-pages/DeletePdf";
 import PdfToImage from "@/features/pdf/components/pdf-to-image/PdfToImage";
 import ProtectPdf from "@/features/pdf/components/protect/ProtectPdf";
 import UnprotectPdf from "@/features/pdf/components/unprotect/UnprotedPdf";
+import RotatePdf from "@/features/pdf/components/rotate/RotatePdf";
 
 export const PDF_TOOL_VIEWS = {
   merge: MergePdf,
@@ -14,4 +15,5 @@ export const PDF_TOOL_VIEWS = {
   "pdf-to-image": PdfToImage,
   protect: ProtectPdf,
   unlock: UnprotectPdf,
+  rotate: RotatePdf,
 } as const;

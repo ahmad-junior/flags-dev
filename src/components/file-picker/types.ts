@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface AppFile<T = unknown> {
   id: string;
   file: File;
@@ -36,4 +38,5 @@ export interface FilePickerProps {
   files: AppFile[];
   config: FilePickerConfig;
   onChange(files: AppFile[]): void;
+  renderActions?: (file: AppFile) => ReactNode;
 }
