@@ -1,6 +1,6 @@
 import {
   Combine,
-  // Scissors,
+  Scissors,
   // Minimize2,
   ArrowUpDown,
   RotateCw,
@@ -19,11 +19,11 @@ export const pdfToolTabs: ToolTab[] = [
     label: "Merge",
     icon: Combine,
   },
-  // {
-  //     id: "split",
-  //     label: "Split",
-  //     icon: Scissors,
-  // },
+  {
+    id: "split",
+    label: "Split",
+    icon: Scissors,
+  },
   // {
   //     id: "compress",
   //     label: "Compress",
