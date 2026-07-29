@@ -6,6 +6,7 @@ import PdfToImage from "@/features/pdf/components/pdf-to-image/PdfToImage";
 import ProtectPdf from "@/features/pdf/components/protect/ProtectPdf";
 import UnprotectPdf from "@/features/pdf/components/unprotect/UnprotedPdf";
 import RotatePdf from "@/features/pdf/components/rotate/RotatePdf";
+import SplitPdf from "@/features/pdf/components/split/SplitPdf";
 
 export const PDF_TOOL_VIEWS = {
   merge: MergePdf,
@@ -16,4 +17,5 @@ export const PDF_TOOL_VIEWS = {
   protect: ProtectPdf,
   unlock: UnprotectPdf,
   rotate: RotatePdf,
+  split: SplitPdf,
 } as const;
