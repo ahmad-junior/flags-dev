@@ -123,12 +123,24 @@ export default function PdfToImageActions({
               placeholder="e.g. 1-3, 5, 8"
               value={pageRange}
               onChange={(e) => handleRangeInputChange(e.target.value)}
-              disabled={disabled}
               className="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/20"
             />
             <p className="mt-1 text-[11px] text-slate-500">
               Separate page numbers with commas or ranges with hyphens.
             </p>
+
+            <div className="mt-2.5 flex flex-col items-center justify-center rounded-xl bg-slate-50/80 px-3 py-2 text-[11px] text-slate-500 border border-slate-200/60 backdrop-blur-xs">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span>Live Sync Active</span>
+              </div>
+              <span className="text-slate-400">
+                Auto-filters on complete range
+              </span>
+            </div>
           </div>
         )}
       </div>

@@ -67,9 +67,10 @@ export default function FileCard({
               type="button"
               {...dragHandle.attributes}
               {...dragHandle.listeners}
-              className="pointer-events-auto rounded-xl bg-white/90 p-2 text-slate-500 shadow-md backdrop-blur transition hover:bg-slate-100 hover:text-slate-700 cursor-grab active:cursor-grabbing"
+              className="pointer-events-auto touch-none rounded-xl bg-white/90 p-2.5 text-slate-500 shadow-md backdrop-blur transition hover:bg-slate-100 hover:text-slate-700 cursor-grab active:cursor-grabbing"
+              aria-label="Drag to reorder page"
             >
-              <GripVertical className="h-4 w-4" />
+              <GripVertical className="h-5 w-5" />
             </button>
           ) : (
             <div />
@@ -78,6 +79,7 @@ export default function FileCard({
           <button
             type="button"
             onPointerDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             onClick={() => onRemove(file.id)}
             className="pointer-events-auto cursor-pointer flex items-center gap-2 rounded-xl bg-white/90 px-3 py-2 text-slate-600 shadow-md backdrop-blur transition-all duration-200 hover:bg-red-50 hover:text-red-600"
           >
@@ -118,6 +120,7 @@ export default function FileCard({
         {actions && (
           <div
             onPointerDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
             className="flex items-center gap-2"
           >
             {actions}

@@ -105,13 +105,24 @@ export default function RotatePdfActions({
               type="text"
               placeholder="e.g. 1-3, 5, 7-9"
               value={pageRange}
-              disabled={disabled}
               onChange={(e) => handleRangeTextChange(e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 disabled:bg-slate-50"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
             />
             <p className="text-[11px] text-slate-400">
               Enter page numbers separated by commas or hyphens.
             </p>
+            <div className="mt-2.5 flex flex-col items-center justify-center rounded-xl bg-slate-50/80 px-3 py-2 text-[11px] text-slate-500 border border-slate-200/60 backdrop-blur-xs">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                <span>Live Sync Active</span>
+              </div>
+              <span className="text-slate-400">
+                Auto-filters on complete range
+              </span>
+            </div>
           </div>
         )}
       </div>

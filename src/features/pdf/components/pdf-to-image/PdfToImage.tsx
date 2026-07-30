@@ -72,7 +72,7 @@ export default function PdfToImage() {
       const filtered = targetIndices.map((idx) => originalPages[idx]);
       setPages(filtered);
     } else {
-      setPages([]);
+      setPages(originalPages);
     }
   }
 
