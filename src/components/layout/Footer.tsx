@@ -50,7 +50,14 @@ export default function Footer() {
               href={STATIC_PATHS.contact}
               className="transition-colors hover:text-slate-900"
             >
-              Contact
+              Contact us
+            </Link>
+
+            <Link
+              href={STATIC_PATHS.about}
+              className="transition-colors hover:text-slate-900"
+            >
+              About us
             </Link>
 
             <a

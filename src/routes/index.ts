@@ -4,6 +4,7 @@ export const PUBLIC_PATHS = {
   terms: "/legal/terms",
   contact: "/legal/contact",
   license: "/legal/license",
+  about: "/legal/about",
   tools: "/tools",
   gitHubRepo: "https://github.com/ahmad-junior/flags-dev",
 };
