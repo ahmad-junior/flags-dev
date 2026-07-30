@@ -80,7 +80,7 @@ export default function RotatePdf() {
       const filtered = targetIndices.map((idx) => originalPages[idx]);
       setPages(filtered);
     } else {
-      setPages([]);
+      setPages(originalPages);
     }
   }
 
