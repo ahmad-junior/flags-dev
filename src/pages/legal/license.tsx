@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import AdsenseAd from "@/components/adds/AdsenseAd";
+import { CANONICAL_PATHS } from "@/routes";
 
 const LAST_UPDATED_LICENCE = "12 - July - 2026";
 
@@ -10,6 +11,7 @@ export default function LicensePage() {
       <SEO
         title="License"
         description="FlagsDev is an open-source project released under the MIT License."
+        canonical={CANONICAL_PATHS.license}
       />
 
       <main className="mx-auto max-w-4xl px-6 py-20">

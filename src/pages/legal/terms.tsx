@@ -1,5 +1,5 @@
 import SEO from "@/components/SEO";
-import { STATIC_PATHS } from "@/routes";
+import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import Link from "next/link";
 import AdsenseAd from "@/components/adds/AdsenseAd";
@@ -12,6 +12,7 @@ export default function TermsPage() {
       <SEO
         title="Terms of Service"
         description="Terms of Service for using FlagsDev."
+        canonical={CANONICAL_PATHS.terms}
       />
 
       <main className="mx-auto max-w-4xl px-6 py-20">

@@ -1,5 +1,5 @@
 import SEO from "@/components/SEO";
-import { STATIC_PATHS } from "@/routes";
+import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import AdsenseAd from "@/components/adds/AdsenseAd";
 
@@ -11,6 +11,7 @@ export default function ContactPage() {
       <SEO
         title="Contact"
         description="Get in touch with FlagsDev, report bugs, request features, or contribute to the project."
+        canonical={CANONICAL_PATHS.contact}
       />
 
       <main className="mx-auto max-w-5xl px-6 py-20">

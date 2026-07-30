@@ -1,6 +1,7 @@
 import SEO from "@/components/SEO";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import AdsenseAd from "@/components/adds/AdsenseAd";
+import { CANONICAL_PATHS } from "@/routes";
 
 const LAST_UPDATE_PRIVACY = "12 - July - 2026";
 
@@ -10,6 +11,7 @@ export default function PrivacyPage() {
       <SEO
         title="Privacy Policy"
         description="Learn how FlagsDev protects your privacy and processes files locally in your browser."
+        canonical={CANONICAL_PATHS.privacy}
       />
 
       <main className="mx-auto max-w-4xl px-6 py-20">

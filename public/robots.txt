@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://flagsdev.com
+
+# Sitemaps
+Sitemap: https://flagsdev.com/sitemap.xml
