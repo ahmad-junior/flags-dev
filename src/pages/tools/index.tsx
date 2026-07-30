@@ -3,6 +3,7 @@ import AdsenseAd from "@/components/adds/AdsenseAd";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import ToolGrid from "@/components/tools/ToolGrid";
 import { tools } from "@/constants/tools";
+import { CANONICAL_PATHS } from "@/routes";
 import { ShieldCheck, Laptop, Lock } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -31,6 +32,7 @@ export default function ToolsPage() {
       <SEO
         title="Free Browser Tools"
         description="Privacy first browser tools that run entirely on your device. No uploads, no tracking, no accounts."
+        canonical={CANONICAL_PATHS.tools}
       />
 
       <main className="mx-auto max-w-7xl px-6 py-16">

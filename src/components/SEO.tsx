@@ -7,6 +7,7 @@ type SEOProps = {
   image?: string;
   url?: string;
   noIndex?: boolean;
+  canonical?: string;
 };
 
 const DEFAULTS = {
@@ -26,6 +27,7 @@ export default function SEO({
   image,
   url,
   noIndex = false,
+  canonical,
 }: SEOProps) {
   const seo = {
     title: title ? `${title} | FlagsDev` : DEFAULTS.title,
@@ -42,6 +44,11 @@ export default function SEO({
   return (
     <Head>
       <title>{seo.title}</title>
+
+      <meta
+        name="google-site-verification"
+        content="YmqCYrtofhpXCz3qOg6LE7ucjfL-0QHrQ7FwTV5Rzlw"
+      />
 
       <meta name="description" content={seo.description} />
 
@@ -83,6 +90,9 @@ export default function SEO({
       <link rel="icon" href="/favicon.ico" />
 
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+      {/* Canonical */}
+      {canonical && <link rel="canonical" href={canonical} />}
     </Head>
   );
 }
