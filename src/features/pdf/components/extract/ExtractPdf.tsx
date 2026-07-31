@@ -9,9 +9,9 @@ import FileCard from "@/components/file-picker/FileCard";
 import { PDF_PICKER } from "@/components/file-picker/presets";
 import { AppFile } from "@/components/file-picker/types";
 
-import ExtractPdfActions from "./ExtractPdfActions";
-import { extractPdfPages } from "./extractPdfPages";
-import { makePagesFromPdf } from "../shared/makePageFromPdf";
+import ExtractPdfActions from "@/features/pdf/components/extract/ExtractPdfActions";
+import { extractPdfPages } from "@/features/pdf/components/extract/extractPdfPages";
+import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromPdf";
 
 export default function ExtractPdf() {
   const [pdfFiles, setPdfFiles] = useState<AppFile[]>([]);
@@ -112,7 +112,7 @@ export default function ExtractPdf() {
         .replace("T", "_")
         .slice(0, 19);
 
-      const filename = `FlagsDev_extracted_${timestamp}.pdf`;
+      const filename = `FlagsDev.com_extracted_${timestamp}.pdf`;
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
