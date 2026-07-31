@@ -9,6 +9,7 @@ export const PUBLIC_PATHS = {
   about: "/legal/about",
   tools: "/tools",
   pdfTool: "/tools/pdf",
+  converterTool: "/tools/converter",
   gitHubRepo: "https://github.com/ahmad-junior/flags-dev",
 };
 
@@ -25,4 +26,5 @@ export const CANONICAL_PATHS = {
   about: `${SITE_URL}${PUBLIC_PATHS.about}`,
   tools: `${SITE_URL}${PUBLIC_PATHS.tools}`,
   pdfTool: `${SITE_URL}${PUBLIC_PATHS.pdfTool}`,
+  converterTool: `${SITE_URL}${PUBLIC_PATHS.converterTool}`,
 };
