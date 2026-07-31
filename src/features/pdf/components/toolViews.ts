@@ -8,6 +8,7 @@ import UnprotectPdf from "@/features/pdf/components/unprotect/UnprotedPdf";
 import RotatePdf from "@/features/pdf/components/rotate/RotatePdf";
 import SplitPdf from "@/features/pdf/components/split/SplitPdf";
 import CompressPdf from "@/features/pdf/components/compress/CompressPdf";
+import ExtractPdf from "@/features/pdf/components/extract/ExtractPdf";
 
 export const PDF_TOOL_VIEWS = {
   merge: MergePdf,
@@ -20,4 +21,5 @@ export const PDF_TOOL_VIEWS = {
   rotate: RotatePdf,
   split: SplitPdf,
   compress: CompressPdf,
+  extract: ExtractPdf,
 } as const;

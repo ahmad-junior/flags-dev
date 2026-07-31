@@ -12,21 +12,27 @@ import { getFileTypeConfig } from "@/components/file-picker/fileTypeConfig";
 
 interface FileCardProps {
   file: AppFile;
-  onRemove(id: string): void;
+  onRemove?: (id: string) => void;
+  topRightControl?: React.ReactNode;
   actions?: React.ReactNode;
   footer?: React.ReactNode;
   dragHandle?: {
     attributes: DraggableAttributes;
     listeners?: SyntheticListenerMap;
   };
+  onClick?: () => void;
+  isSelected?: boolean;
 }
 
 export default function FileCard({
   file,
   onRemove,
+  topRightControl,
   actions,
   footer,
   dragHandle,
+  onClick,
+  isSelected,
 }: FileCardProps) {
   const config = getFileTypeConfig(file.type);
   const Icon = config.icon;
@@ -34,7 +40,17 @@ export default function FileCard({
   const rotation = (file.metadata as { rotation?: number })?.rotation || 0;
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-200 hover:-translate-y-1 hover:border-green-500 hover:shadow-lg">
+    <article
+      onClick={onClick}
+      className={clsx(
+        "group overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg select-none",
+        onClick && "cursor-pointer",
+        isSelected === true &&
+          "border-green-500 ring-2 ring-green-500/20 bg-green-50/10",
+        isSelected === false && "border-slate-200 opacity-60 hover:opacity-100",
+        isSelected === undefined && "border-slate-200 hover:border-green-500",
+      )}
+    >
       <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-50 p-3 flex items-center justify-center">
         <div
           className="relative h-full w-full flex items-center justify-center transition-transform duration-300 ease-in-out"
@@ -76,18 +92,31 @@ export default function FileCard({
             <div />
           )}
 
-          <button
-            type="button"
-            onPointerDown={(e) => e.stopPropagation()}
-            onTouchStart={(e) => e.stopPropagation()}
-            onClick={() => onRemove(file.id)}
-            className="pointer-events-auto cursor-pointer flex items-center gap-2 rounded-xl bg-white/90 px-3 py-2 text-slate-600 shadow-md backdrop-blur transition-all duration-200 hover:bg-red-50 hover:text-red-600"
-          >
-            <Trash2 className="h-4 w-4 shrink-0" />
-            <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:max-w-24 group-hover:opacity-100">
-              Remove
-            </span>
-          </button>
+          {topRightControl ? (
+            <div
+              onPointerDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+              className="pointer-events-auto"
+            >
+              {topRightControl}
+            </div>
+          ) : onRemove ? (
+            <button
+              type="button"
+              onPointerDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove(file.id);
+              }}
+              className="pointer-events-auto cursor-pointer flex items-center gap-2 rounded-xl bg-white/90 px-3 py-2 text-slate-600 shadow-md backdrop-blur transition-all duration-200 hover:bg-red-50 hover:text-red-600"
+            >
+              <Trash2 className="h-4 w-4 shrink-0" />
+              <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:max-w-24 group-hover:opacity-100">
+                Remove
+              </span>
+            </button>
+          ) : null}
         </div>
       </div>
 

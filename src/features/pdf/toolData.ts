@@ -114,7 +114,7 @@ export const pdfTools = {
     },
   ],
 
-  lastUpdated: "15 July 2026",
+  lastUpdated: "31 July 2026",
 
   openSource: true,
 
