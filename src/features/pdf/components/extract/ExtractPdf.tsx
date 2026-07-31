@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { Check } from "lucide-react";
+import { Check, RefreshCw } from "lucide-react";
 
 import FilePicker from "@/components/file-picker/FilePicker";
 import FileCard from "@/components/file-picker/FileCard";
@@ -136,6 +136,13 @@ export default function ExtractPdf() {
     }
   }
 
+  const handleResetFile = () => {
+    setPages([]);
+    setPdfFiles([]);
+    setSelectedIndices([]);
+    setOriginalFile(null);
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="min-w-0">
@@ -151,6 +158,22 @@ export default function ExtractPdf() {
         ) : (
           // Custom Card View not use Default File Picker
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+            <button
+              type="button"
+              onClick={handleResetFile}
+              className="flex min-h-[220px] flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/50 p-6 text-center transition hover:border-slate-400 hover:bg-slate-100/70 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer group"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white border border-slate-200 text-slate-600 shadow-xs transition group-hover:scale-105 group-hover:border-slate-300 group-hover:text-green-600">
+                <RefreshCw className="h-5 w-5" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-slate-800">
+                  Change File
+                </p>
+                <p className="text-xs text-slate-500">Back to file picker.</p>
+              </div>
+            </button>
+
             {pages.map((page, index) => {
               const isSelected = selectedIndices.includes(index);
 
