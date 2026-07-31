@@ -5,7 +5,7 @@ import {
   ArrowUpDown,
   RotateCw,
   Trash2,
-  // FileOutput,
+  FileOutput,
   Lock,
   LockOpen,
   FileImage,
@@ -44,11 +44,11 @@ export const pdfToolTabs: ToolTab[] = [
     label: "Delete Pages",
     icon: Trash2,
   },
-  // {
-  //     id: "extract",
-  //     label: "Extract",
-  //     icon: FileOutput,
-  // },
+  {
+    id: "extract",
+    label: "Extract",
+    icon: FileOutput,
+  },
   {
     id: "protect",
     label: "Protect",
