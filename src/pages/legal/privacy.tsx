@@ -83,7 +83,9 @@ export default function PrivacyPage() {
           </p>
         </div>
       </main>
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 }
