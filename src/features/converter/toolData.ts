@@ -15,7 +15,7 @@ export const converterTools = {
     "Privacy First",
     "WASM Powered",
     "No Uploads",
-    "NO Servers",
+    "No Servers",
     "Free Forever",
   ],
 
@@ -115,7 +115,7 @@ export const converterTools = {
     },
   ],
 
-  lastUpdated: "1 August 2026",
+  lastUpdated: "04 September 2026",
 
   openSource: true,
 

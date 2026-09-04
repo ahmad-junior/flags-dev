@@ -15,7 +15,7 @@ export const pdfTools = {
     "Privacy First",
     "Browser Powered",
     "No Uploads",
-    "NO Servers",
+    "No Servers",
     "Free Forever",
   ],
 
@@ -114,7 +114,7 @@ export const pdfTools = {
     },
   ],
 
-  lastUpdated: "31 July 2026",
+  lastUpdated: "01 September 2026",
 
   openSource: true,
 
