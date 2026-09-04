@@ -22,7 +22,16 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 md:flex-row">
-          <p>© {new Date().getFullYear()} FlagsDev. Built for the open web.</p>
+          <p>
+            © {new Date().getFullYear()}{" "}
+            <Link
+              href={STATIC_PATHS.home}
+              className="font-bold transition-colors text-slate-700 hover:text-slate-900"
+            >
+              FlagsDev.
+            </Link>{" "}
+            Built for the open web.
+          </p>
 
           <nav className="flex flex-wrap items-center justify-center gap-6">
             <Link
