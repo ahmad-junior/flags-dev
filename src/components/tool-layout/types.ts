@@ -20,6 +20,11 @@ export interface ToolTab {
   id: string;
   label: string;
   icon: ComponentType<{ className?: string }>;
+
+  help?: {
+    href: string;
+    label?: string;
+  };
 }
 
 export interface ToolDefinition {

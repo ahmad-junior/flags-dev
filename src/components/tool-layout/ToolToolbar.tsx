@@ -1,4 +1,6 @@
 import { useRef, useState } from "react";
+import Link from "next/link";
+import { CircleHelp, ArrowRight } from "lucide-react";
 import clsx from "clsx";
 import {
   FaChevronLeft,
@@ -21,6 +23,8 @@ export default function ToolToolbar({
 }: ToolToolbarProps) {
   const [expanded, setExpanded] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const activeTool = tabs.find((tab) => tab.id === activeTab);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -123,6 +127,27 @@ export default function ToolToolbar({
           );
         })}
       </div>
+
+      {/* Tool help */}
+      {activeTool?.help && (
+        <div className="flex justify-center px-4 pb-4 pt-1">
+          <Link
+            href={activeTool.help.href}
+            aria-label={
+              activeTool.help.label || `Learn how to use ${activeTool.label}`
+            }
+            className="group inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-500 transition-all duration-200 hover:bg-slate-50 hover:text-slate-900"
+          >
+            <CircleHelp className="h-4 w-4 text-slate-400 transition-colors group-hover:text-indigo-500" />
+
+            <span>
+              {activeTool.help.label || `How to use ${activeTool.label}`}
+            </span>
+
+            <ArrowRight className="h-3.5 w-3.5 text-slate-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-indigo-500" />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
