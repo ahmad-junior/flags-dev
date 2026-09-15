@@ -57,3 +57,11 @@ export interface DocsTableOfContentsProps {
     title: string;
   }[];
 }
+
+type CalloutType = "info" | "tip" | "privacy" | "warning";
+
+export interface DocsCalloutProps {
+  type?: CalloutType;
+  title: string;
+  children: React.ReactNode;
+}

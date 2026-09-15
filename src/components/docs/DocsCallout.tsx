@@ -1,12 +1,5 @@
 import { Info, Lightbulb, ShieldCheck, AlertTriangle } from "lucide-react";
-
-type CalloutType = "info" | "tip" | "privacy" | "warning";
-
-interface DocsCalloutProps {
-  type?: CalloutType;
-  title: string;
-  children: React.ReactNode;
-}
+import { DocsCalloutProps } from "@/components/docs/types";
 
 const icons = {
   info: Info,
