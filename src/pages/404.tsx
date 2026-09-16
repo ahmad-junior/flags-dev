@@ -28,7 +28,9 @@ const Custom404 = () => {
           Go to Home
         </Link>
       </div>
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 };

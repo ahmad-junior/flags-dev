@@ -10,9 +10,13 @@ export default function HomePage() {
       <SEO />
       <Hero />
       <Trust />
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
       <Security />
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>{" "}
     </>
   );
 }

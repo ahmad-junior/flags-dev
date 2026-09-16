@@ -66,7 +66,9 @@ export default function LicensePage() {
           </p>
         </div>
       </main>
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 }

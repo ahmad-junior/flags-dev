@@ -84,7 +84,9 @@ export default function TermsPage() {
           </p>
         </div>
       </main>
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 }

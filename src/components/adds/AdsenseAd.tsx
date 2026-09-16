@@ -14,13 +14,18 @@ export default function AdsenseAd() {
   }, []);
 
   return (
-    <ins
-      className="adsbygoogle"
-      style={{ display: "block" }}
-      data-ad-client="ca-pub-5501202176561362"
-      data-ad-slot="3661190168"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
+    <div className="w-full min-h-[100px]">
+      <ins
+        className="adsbygoogle"
+        style={{
+          display: "block",
+          width: "100%",
+        }}
+        data-ad-client="ca-pub-5501202176561362"
+        data-ad-slot="3661190168"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    </div>
   );
 }

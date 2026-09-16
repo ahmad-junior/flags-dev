@@ -74,7 +74,9 @@ export default function ToolsPage() {
           <ToolGrid tools={tools} />
         </section>
       </main>
-      <AdsenseAd />
+      <div className="w-full">
+        <AdsenseAd />
+      </div>
     </>
   );
 }
