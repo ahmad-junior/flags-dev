@@ -1,4 +1,4 @@
-const SITE_URL = "https://flagsdev.com";
+export const SITE_URL = "https://flagsdev.com";
 
 export const PUBLIC_PATHS = {
   home: "/",

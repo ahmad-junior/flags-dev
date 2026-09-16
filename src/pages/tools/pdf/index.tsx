@@ -8,6 +8,8 @@ import ToolToolbar from "@/components/tool-layout/ToolToolbar";
 import { pdfTools } from "@/features/pdf/toolData";
 import { pdfToolTabs } from "@/features/pdf/toolTabs";
 
+import AdsenseAd from "@/components/adds/AdsenseAd";
+
 import SelectPDFToolNotice from "@/features/pdf/components/SelectPDFToolNotice";
 import { PDF_TOOL_VIEWS } from "@/features/pdf/components/toolViews";
 import { CANONICAL_PATHS } from "@/routes";
@@ -69,6 +71,7 @@ export default function Page() {
 
           {ActiveComponent ? <ActiveComponent /> : <SelectPDFToolNotice />}
         </div>
+        <AdsenseAd />
       </ToolLayout>
     </>
   );
