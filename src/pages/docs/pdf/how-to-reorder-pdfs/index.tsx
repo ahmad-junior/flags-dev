@@ -6,6 +6,7 @@ import DocsTableOfContents from "@/components/docs/DocsTableOfContents";
 import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
 
 const LAST_UPDATED = "13 September 2026";
@@ -76,6 +77,7 @@ export default function HowToRearrangePdfPagesPage() {
             FlagsDev PDF Reorder tool.
           </p>
         </section>
+        <AdsenseAd />
 
         <DocsImage
           src="/images/reorder-pdf-pages-illustration.svg"
@@ -287,6 +289,7 @@ export default function HowToRearrangePdfPagesPage() {
             .
           </p>
         </section>
+        <AdsenseAd />
 
         <section className="not-prose mt-16 rounded-3xl bg-slate-950 px-7 py-10 text-white sm:px-10">
           <div className="max-w-3xl">

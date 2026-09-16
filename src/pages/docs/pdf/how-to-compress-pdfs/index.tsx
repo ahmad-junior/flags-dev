@@ -6,6 +6,7 @@ import DocsTableOfContents from "@/components/docs/DocsTableOfContents";
 import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
+import AdsenseAd from "@/components/adds/AdsenseAd";
 import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
 
 const LAST_UPDATED = "13 September 2026";
@@ -76,6 +77,8 @@ export default function HowToCompressPdfsPage() {
             FlagsDev PDF Compress tool.
           </p>
         </section>
+
+        <AdsenseAd />
 
         {/* Illustration */}
         <DocsImage
@@ -302,6 +305,8 @@ export default function HowToCompressPdfsPage() {
             .
           </p>
         </section>
+
+        <AdsenseAd />
 
         {/* Final CTA */}
         <section className="not-prose mt-16 rounded-3xl bg-slate-950 px-7 py-10 text-white sm:px-10">
