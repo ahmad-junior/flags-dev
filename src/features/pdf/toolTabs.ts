@@ -73,45 +73,45 @@ export const pdfToolTabs: ToolTab[] = [
     id: "extract",
     label: "Extract",
     icon: FileOutput,
-    // help: {
-    //   href: `${PUBLIC_PATHS.pdfHowToExtract}`,
-    //   label: "Learn more about extracting PDF pages",
-    // },
+    help: {
+      href: `${PUBLIC_PATHS.pdfHowToExtract}`,
+      label: "Learn more about extracting PDF pages",
+    },
   },
   {
     id: "protect",
     label: "Protect",
     icon: Lock,
-    // help: {
-    //   href: `${PUBLIC_PATHS.pdfHowToProtect}`,
-    //   label: "Learn more about password-protecting PDFs",
-    // },
+    help: {
+      href: `${PUBLIC_PATHS.pdfHowToProtect}`,
+      label: "Learn more about password-protecting PDFs",
+    },
   },
   {
     id: "unlock",
     label: "Unlock",
     icon: LockOpen,
-    // help: {
-    //   href: `${PUBLIC_PATHS.pdfHowToUnlock}`,
-    //   label: "Learn more about unlocking PDFs",
-    // },
+    help: {
+      href: `${PUBLIC_PATHS.pdfHowToUnlock}`,
+      label: "Learn more about unlocking PDFs",
+    },
   },
   {
     id: "pdf-to-image",
     label: "PDF → Image",
     icon: FileImage,
-    // help: {
-    //   href: `${PUBLIC_PATHS.pdfHowToPdfToImage}`,
-    //   label: "Learn more about converting PDF to Images",
-    // },
+    help: {
+      href: `${PUBLIC_PATHS.pdfHowToPdfToImage}`,
+      label: "Learn more about converting PDF to Images",
+    },
   },
   {
     id: "image-to-pdf",
     label: "Image → PDF",
     icon: Images,
-    // help: {
-    //   href: `${PUBLIC_PATHS.pdfHowToImageToPdf}`,
-    //   label: "Learn more about converting Images to PDF",
-    // },
+    help: {
+      href: `${PUBLIC_PATHS.pdfHowToImageToPdf}`,
+      label: "Learn more about converting Images to PDF",
+    },
   },
 ];

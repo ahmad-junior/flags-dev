@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Soft Background Container Tile -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#F8FAFC" />
+
+  <!-- SOURCE PDF DOCUMENT (BACKGROUND) -->
+  <g transform="translate(10, 8)">
+    <!-- Shadow -->
+    <path d="M0 2C0 0.895431 0.895431 0 2 0H18L26 8V38C26 39.1046 25.1046 40 24 40H2C0.895431 40 0 39.1046 0 38V2Z" fill="#0F172A" opacity="0.06" transform="translate(1, 1.5)"/>
+    <!-- Document Body -->
+    <path d="M0 2C0 0.895431 0.895431 0 2 0H18L26 8V38C26 39.1046 25.1046 40 24 40H2C0.895431 40 0 39.1046 0 38V2Z" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+    <path d="M18 0L26 8H19C18.4477 8 18 7.55228 18 7V0Z" fill="#94A3B8"/>
+    <!-- Content Lines -->
+    <rect x="4" y="10" width="12" height="2" rx="1" fill="#64748B"/>
+    <rect x="4" y="15" width="16" height="1.5" rx="0.75" fill="#CBD5E1"/>
+    <rect x="4" y="19" width="10" height="1.5" rx="0.75" fill="#CBD5E1"/>
+    <rect x="4" y="23" width="16" height="1.5" rx="0.75" fill="#CBD5E1"/>
+    <rect x="4" y="27" width="13" height="1.5" rx="0.75" fill="#CBD5E1"/>
+  </g>
+
+  <!-- EXTRACTED PAGE (PULLED OUT FRONT & RIGHT) -->
+  <g transform="translate(26, 18)">
+    <!-- Shadow -->
+    <path d="M0 2C0 0.895431 0.895431 0 2 0H16L24 8V32C24 33.1046 23.1046 34 22 34H2C0.895431 34 0 33.1046 0 32V2Z" fill="#0F172A" opacity="0.12" transform="translate(2, 2.5)"/>
+    <!-- Page Body -->
+    <path d="M0 2C0 0.895431 0.895431 0 2 0H16L24 8V32C24 33.1046 23.1046 34 22 34H2C0.895431 34 0 33.1046 0 32V2Z" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.5"/>
+    <path d="M16 0L24 8H17C16.4477 8 16 7.55228 16 7V0Z" fill="#2563EB"/>
+    <!-- Highlighted Extracted Page Content -->
+    <rect x="4" y="9" width="12" height="2" rx="1" fill="#2563EB"/>
+    <rect x="4" y="14" width="15" height="1.5" rx="0.75" fill="#93C5FD"/>
+    <rect x="4" y="18" width="10" height="1.5" rx="0.75" fill="#93C5FD"/>
+    <rect x="4" y="22" width="15" height="1.5" rx="0.75" fill="#93C5FD"/>
+  </g>
+
+  <!-- EXTRACTION ACTION BADGE (OUTWARD ARROW) -->
+  <g transform="translate(22, 34)">
+    <circle cx="10" cy="10" r="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2"/>
+    <!-- Diagonal Export / Extract Arrow -->
+    <path d="M7 13L13 7M13 7H9M13 7V11" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
