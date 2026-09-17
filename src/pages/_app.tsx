@@ -7,6 +7,7 @@ import type { NextPage } from "next";
 import SEO from "@/components/SEO";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
+import Navigation from "@/components/navigation/Navigation";
 
 import Footer from "@/components/layout/Footer";
 
@@ -31,6 +32,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5501202176561362"
         crossOrigin="anonymous"
       />
+      <Navigation />
       <main className="min-h-screen flex flex-col">
         {getLayout(<Component {...pageProps} />)}
       </main>
