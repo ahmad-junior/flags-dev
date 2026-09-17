@@ -11,7 +11,8 @@ import {
   Heart,
 } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
-import { PUBLIC_PATHS } from "@/routes";
+import { PUBLIC_PATHS, STATIC_PATHS } from "@/routes";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 import { tools } from "@/constants/tools";
 
 export default function Navigation() {
@@ -118,22 +119,21 @@ export default function Navigation() {
           </Link>
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href={PUBLIC_PATHS.gitHubRepo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm transition-all hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+        <div className="hidden items-center gap-2.5 md:flex">
+          <ExternalLinkModal
+            href={STATIC_PATHS.gitHubRepo}
+            siteName="GitHub repository"
+            className="group inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 hover:shadow-md active:translate-y-0"
           >
-            <FaGithub className="h-4 w-4 text-slate-800" />
+            <FaGithub className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
             <span>GitHub</span>
-          </Link>
+          </ExternalLinkModal>
 
           <Link
             href="/sponsor"
-            className="group flex items-center gap-2 rounded-xl border border-rose-200/60 bg-rose-50/50 px-3.5 py-2 text-sm font-medium text-rose-700 shadow-sm transition-all hover:border-rose-300 hover:bg-rose-100/50 hover:text-rose-800 active:scale-95"
+            className="group inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-rose-300 hover:bg-rose-100 hover:text-rose-800 hover:shadow-md active:translate-y-0"
           >
-            <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-300 group-hover:scale-125" />
+            <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110" />
             <span>Sponsor</span>
           </Link>
         </div>
@@ -204,23 +204,21 @@ export default function Navigation() {
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3 border-t border-slate-100 pt-6">
-              <Link
-                href={PUBLIC_PATHS.gitHubRepo}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-medium text-slate-700 shadow-sm transition-all hover:bg-slate-50"
+              <ExternalLinkModal
+                href={STATIC_PATHS.gitHubRepo}
+                siteName="GitHub repository"
+                className="group inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 hover:shadow-md active:scale-[0.98]"
               >
-                <FaGithub className="h-4 w-4 text-slate-800" />
+                <FaGithub className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
                 <span>GitHub</span>
-              </Link>
+              </ExternalLinkModal>
 
               <Link
                 href="/sponsor"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-3 py-3 text-sm font-semibold text-white shadow-md shadow-rose-600/20 transition-all hover:bg-rose-700"
+                className="group inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:border-rose-300 hover:bg-rose-100 hover:text-rose-800 hover:shadow-md active:scale-[0.98]"
               >
-                <Heart className="h-4 w-4 fill-white" />
+                <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110" />
                 <span>Sponsor</span>
               </Link>
             </div>

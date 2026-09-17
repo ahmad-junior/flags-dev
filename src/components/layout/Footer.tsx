@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 
 import { STATIC_PATHS } from "@/routes";
 
@@ -69,15 +70,13 @@ export default function Footer() {
               About us
             </Link>
 
-            <a
+            <ExternalLinkModal
               href={STATIC_PATHS.gitHubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Repository"
+              siteName="GitHub repository"
               className="text-xl transition-colors hover:text-slate-900"
             >
               <FaGithub />
-            </a>
+            </ExternalLinkModal>
           </nav>
         </div>
       </div>
