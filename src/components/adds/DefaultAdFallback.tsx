@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Check, StarIcon, Share2, Copy } from "lucide-react";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 
 import { SITE_URL } from "@/routes";
 
@@ -115,17 +116,14 @@ export function DefaultAdFallback({
       </p>
 
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
-        <a
+        <ExternalLinkModal
           href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          siteName="GitHub repository"
           className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-          aria-label="Star FlagsDev on GitHub"
         >
           <StarIcon className="h-4 w-4" aria-hidden="true" />
-
           <span>Star on GitHub</span>
-        </a>
+        </ExternalLinkModal>
 
         <button
           type="button"

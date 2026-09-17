@@ -2,6 +2,7 @@ import SEO from "@/components/SEO";
 import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import AdsenseAd from "@/components/adds/AdsenseAd";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 
 import { FaGithub, FaEnvelope, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 
@@ -41,14 +42,13 @@ export default function ContactPage() {
               Report bugs, request features, or contribute to the project.
             </p>
 
-            <a
+            <ExternalLinkModal
               href={STATIC_PATHS.gitHubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
+              siteName="GitHub repository"
               className="mt-5 inline-flex font-medium text-blue-600 hover:text-blue-700"
             >
               {STATIC_PATHS.gitHubRepo}
-            </a>
+            </ExternalLinkModal>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
@@ -85,14 +85,13 @@ export default function ContactPage() {
               Contact us directly for quick questions or collaboration.
             </p>
 
-            <a
+            <ExternalLinkModal
               href="https://wa.me/923001860770"
-              target="_blank"
-              rel="noopener noreferrer"
+              siteName="WhatsApp"
               className="mt-5 inline-flex font-medium text-blue-600 hover:text-blue-700"
             >
               +92 300 1860770
-            </a>
+            </ExternalLinkModal>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">

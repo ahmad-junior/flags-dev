@@ -8,6 +8,7 @@ import {
   FaGift,
 } from "react-icons/fa";
 import { STATIC_PATHS } from "@/routes";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 
 const features = [
   {
@@ -64,15 +65,14 @@ export default function Hero() {
             <FaArrowRight />
           </Link>
 
-          <a
+          <ExternalLinkModal
             href={STATIC_PATHS.gitHubRepo}
-            target="_blank"
-            rel="noopener noreferrer"
+            siteName="GitHub repository"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition-all hover:-translate-y-0.5 hover:border-slate-400 hover:bg-slate-100"
           >
             <FaGithub />
             View on GitHub
-          </a>
+          </ExternalLinkModal>
         </div>
       </div>
     </section>
