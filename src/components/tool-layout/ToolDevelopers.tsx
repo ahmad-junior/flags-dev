@@ -1,6 +1,9 @@
 import { FaCodeBranch, FaUser, FaGithub } from "react-icons/fa";
 import { ToolDefinition } from "@/components/tool-layout/types";
+import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
 import { STATIC_PATHS } from "@/routes";
+import Link from "next/link";
+import { Heart } from "lucide-react";
 
 interface Props {
   tool: ToolDefinition;
@@ -77,16 +80,22 @@ export default function ToolDevelopers({ tool }: Props) {
           </div>
 
           <div className="flex flex-col gap-3">
-            <a
+            <Link
+              href={STATIC_PATHS.sponsor}
+              className="group inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-rose-300 hover:bg-rose-100 hover:text-rose-800 hover:shadow-md active:translate-y-0"
+            >
+              <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110" />
+              <span>Sponsor</span>
+            </Link>
+
+            <ExternalLinkModal
               href={STATIC_PATHS.gitHubRepo}
-              target="_blank"
-              rel="noopener noreferrer"
+              siteName="GitHub repository"
               className="inline-flex items-center justify-center gap-3 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-slate-800"
             >
               <FaGithub size={20} />
               View Repository
-            </a>
-
+            </ExternalLinkModal>
             <p className="text-center text-xs text-slate-500">
               Fork • Star • Contribute
             </p>
