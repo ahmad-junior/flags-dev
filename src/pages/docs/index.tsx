@@ -15,7 +15,7 @@ import {
 
 import SEO from "@/components/SEO";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { DOC_CATEGORIES } from "@/pages/docs/constants";
+import { DOC_CATEGORIES } from "@/components/docs/constants";
 import { STATIC_PATHS, CANONICAL_PATHS } from "@/routes";
 
 export default function DocsIndexPage() {
