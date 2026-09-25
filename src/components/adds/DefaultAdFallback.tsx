@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Check, StarIcon, Share2, Copy } from "lucide-react";
+import { Check, StarIcon, Share2, Copy, Heart } from "lucide-react";
 import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
-
-import { SITE_URL } from "@/routes";
+import Link from "next/link";
+import { SITE_URL, STATIC_PATHS } from "@/routes";
 
 interface DefaultAdFallbackProps {
   title: string;
@@ -115,15 +115,29 @@ export function DefaultAdFallback({
         {text}
       </p>
 
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
         <ExternalLinkModal
           href={githubUrl}
           siteName="GitHub repository"
-          className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+          className="group inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:bg-slate-800 hover:shadow active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
         >
-          <StarIcon className="h-4 w-4" aria-hidden="true" />
+          <StarIcon
+            className="h-4 w-4 transition-transform duration-200 group-hover:rotate-12"
+            aria-hidden="true"
+          />
           <span>Star on GitHub</span>
         </ExternalLinkModal>
+
+        <Link
+          href={STATIC_PATHS.sponsor}
+          className="group inline-flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50/80 px-4 py-2.5 text-xs font-semibold text-rose-700 shadow-sm transition-all duration-200 hover:border-rose-300 hover:bg-rose-100 hover:text-rose-800 hover:shadow active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-rose-400 focus:ring-offset-2"
+        >
+          <Heart
+            className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110"
+            aria-hidden="true"
+          />
+          <span>Sponsor</span>
+        </Link>
 
         <button
           type="button"
@@ -136,14 +150,23 @@ export function DefaultAdFallback({
                 ? "Sharing page"
                 : "Share this page"
           }
-          className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950 hover:shadow active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {copied ? (
-            <Check className="h-4 w-4" aria-hidden="true" />
+            <Check
+              className="h-4 w-4 text-green-600 transition-transform duration-200 scale-110"
+              aria-hidden="true"
+            />
           ) : sharing ? (
-            <Share2 className="h-4 w-4 animate-pulse" aria-hidden="true" />
+            <Share2
+              className="h-4 w-4 animate-pulse text-slate-500"
+              aria-hidden="true"
+            />
           ) : (
-            <Copy className="h-4 w-4" aria-hidden="true" />
+            <Copy
+              className="h-4 w-4 text-slate-500 transition-transform duration-200 group-hover:scale-110"
+              aria-hidden="true"
+            />
           )}
 
           <span>
