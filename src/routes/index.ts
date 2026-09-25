@@ -13,6 +13,7 @@ export const PUBLIC_PATHS = {
   gitHubRepo: "https://github.com/ahmad-junior/flags-dev",
   sponsor: "/sponsor",
   docs: "/docs",
+  blog: "/blog",
 
   // Docs PDF Tools
   pdfHowToMerge: "/docs/pdf/how-to-merge-pdfs",
@@ -44,6 +45,7 @@ export const CANONICAL_PATHS = {
   converterTool: `${SITE_URL}${PUBLIC_PATHS.converterTool}`,
   sponsor: `${SITE_URL}${PUBLIC_PATHS.sponsor}`,
   docs: `${SITE_URL}${PUBLIC_PATHS.docs}`,
+  blog: `${SITE_URL}${PUBLIC_PATHS.blog}`,
 
   // Docs PDF Tools
   pdfHowToMerge: `${SITE_URL}${PUBLIC_PATHS.pdfHowToMerge}`,

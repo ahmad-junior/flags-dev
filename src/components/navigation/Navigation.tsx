@@ -112,7 +112,14 @@ export default function Navigation() {
           </div>
 
           <Link
-            href="/docs"
+            href={STATIC_PATHS.blog}
+            className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
+          >
+            Blog
+          </Link>
+
+          <Link
+            href={STATIC_PATHS.docs}
             className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
           >
             Docs
@@ -174,7 +181,7 @@ export default function Navigation() {
                 {toolsOpen && (
                   <div className="my-1 ml-4 space-y-1 border-l-2 border-slate-100 pl-3">
                     <Link
-                      href="/tools"
+                      href={STATIC_PATHS.tools}
                       onClick={() => setMobileOpen(false)}
                       className="block rounded-lg px-3 py-2 text-sm font-medium text-green-700 hover:bg-green-50"
                     >
@@ -195,7 +202,15 @@ export default function Navigation() {
               </div>
 
               <Link
-                href="/docs"
+                href={STATIC_PATHS.blog}
+                onClick={() => setMobileOpen(false)}
+                className="block rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50"
+              >
+                Blog
+              </Link>
+
+              <Link
+                href={STATIC_PATHS.docs}
                 onClick={() => setMobileOpen(false)}
                 className="block rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50"
               >
