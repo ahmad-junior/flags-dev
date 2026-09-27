@@ -10,10 +10,12 @@ import SuccessModal from "@/components/modals/SuccessModal";
 
 import MergePdfActions from "./MergePdfActions";
 import { mergePdf } from "@/features/pdf/components/merge/mergePdf";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function MergePdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [downloadFilename, setDownloadFilename] = useState<string>("");
@@ -28,6 +30,7 @@ export default function MergePdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're Merging PDFs...");
 
       const blob = await mergePdf(files);
 
@@ -73,6 +76,7 @@ export default function MergePdf() {
   return (
     <>
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
         <div className="min-w-0">
           <FilePicker files={files} onChange={setFiles} config={PDF_PICKER} />
         </div>

@@ -15,6 +15,7 @@ import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange"
 import { rotatePdfFile } from "@/features/pdf/components/rotate/rotatePdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function RotatePdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
@@ -23,6 +24,7 @@ export default function RotatePdf() {
   const [originalPages, setOriginalPages] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -52,6 +54,7 @@ export default function RotatePdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
       const rawFile = files[0].file;
       setSourcePdfFile(rawFile);
 
@@ -127,6 +130,7 @@ export default function RotatePdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're rotating PDF pages...");
 
       const pageRotationMap: Record<number, number> = {};
       originalPages.forEach((page, originalIndex) => {
@@ -178,6 +182,7 @@ export default function RotatePdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {originalPages.length === 0 || pages.length === 0 ? (
           <FilePicker

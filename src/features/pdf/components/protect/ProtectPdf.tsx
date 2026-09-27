@@ -13,10 +13,12 @@ import ProtectPdfActions, {
 import { protectPdfFile } from "@/features/pdf/components/protect/protectPdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function ProtectPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastSettings, setLastSettings] = useState<ProtectSettings | null>(
@@ -35,6 +37,7 @@ export default function ProtectPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're Protecting PDF...");
 
       const protectedFile = await protectPdfFile(files[0].file, {
         password: settings.password,
@@ -62,6 +65,7 @@ export default function ProtectPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         <FilePicker
           files={files}

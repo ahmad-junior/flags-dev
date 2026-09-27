@@ -13,10 +13,12 @@ import UnprotectPdfActions, {
 import { unprotectPdfFile } from "@/features/pdf/components/unprotect/unprotectPdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function UnprotectPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastSettings, setLastSettings] = useState<UnprotectSettings | null>(
@@ -34,6 +36,7 @@ export default function UnprotectPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unprotecting PDF...");
 
       const unlockedFile = await unprotectPdfFile(files[0].file, {
         password: settings.password,
@@ -60,6 +63,7 @@ export default function UnprotectPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         <FilePicker
           files={files}

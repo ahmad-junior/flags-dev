@@ -13,11 +13,13 @@ import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromP
 import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf"; // Shared
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function ReorderPdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -36,6 +38,7 @@ export default function ReorderPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
 
       const result = await makePagesFromPdf(files[0].file);
 
@@ -56,6 +59,7 @@ export default function ReorderPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're reordering PDF...");
 
       const blob = await imageToPdf(pages);
 
@@ -94,6 +98,7 @@ export default function ReorderPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {pages.length === 0 ? (
           <FilePicker

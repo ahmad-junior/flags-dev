@@ -14,12 +14,14 @@ import { extractPdfPages } from "@/features/pdf/components/extract/extractPdfPag
 import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromPdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function ExtractPdf() {
   const [pdfFiles, setPdfFiles] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
   const [originalFile, setOriginalFile] = useState<File | null>(null);
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -40,6 +42,7 @@ export default function ExtractPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
       const file = files[0].file;
       setOriginalFile(file);
 
@@ -108,6 +111,7 @@ export default function ExtractPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're extracting PDF...");
 
       const blob = await extractPdfPages(originalFile, selectedIndices);
 
@@ -152,6 +156,7 @@ export default function ExtractPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {totalPages === 0 ? (
           <FilePicker

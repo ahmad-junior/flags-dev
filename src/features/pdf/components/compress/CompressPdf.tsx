@@ -14,6 +14,7 @@ import {
   CompressionLevel,
 } from "@/features/pdf/components/compress/compressPdf";
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function CompressPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
@@ -93,6 +94,10 @@ export default function CompressPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal
+        isOpen={loading}
+        text={`${progress}% — Compressing your PDF...`}
+      />
       <div className="min-w-0">
         <FilePicker
           files={files}

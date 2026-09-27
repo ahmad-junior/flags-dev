@@ -12,10 +12,12 @@ import ImageToPdfActions from "@/features/pdf/components/image-to-pdf/ImageToPdf
 import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function ImageToPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [newProcessedFile, setNewProcessedFile] = useState<Blob | null>(null);
@@ -32,6 +34,7 @@ export default function ImageToPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("Creating PDF from Images...");
 
       const blob = await imageToPdf(files);
 
@@ -73,6 +76,7 @@ export default function ImageToPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         <FilePicker files={files} onChange={setFiles} config={IMAGE_PICKER} />
       </div>

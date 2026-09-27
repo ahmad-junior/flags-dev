@@ -14,10 +14,13 @@ import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf"; // Sha
 
 import SuccessModal from "@/components/modals/SuccessModal";
 
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
+
 export default function DeletePdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [newFile, setNewFile] = useState<Blob | null>(null);
@@ -56,6 +59,7 @@ export default function DeletePdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
 
       const result = await makePagesFromPdf(files[0].file);
 
@@ -76,6 +80,7 @@ export default function DeletePdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're reordering PDF...");
 
       const blob = await imageToPdf(pages);
 
@@ -95,6 +100,7 @@ export default function DeletePdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {pages.length === 0 ? (
           <FilePicker
