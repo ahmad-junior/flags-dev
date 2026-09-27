@@ -4,7 +4,6 @@ import Script from "next/script";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
-import SEO from "@/components/SEO";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import Navigation from "@/components/navigation/Navigation";
@@ -24,7 +23,6 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
-      <SEO />
       <Script
         id="adsense-script"
         async
