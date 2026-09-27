@@ -13,12 +13,17 @@ import ExtractPdfActions from "@/features/pdf/components/extract/ExtractPdfActio
 import { extractPdfPages } from "@/features/pdf/components/extract/extractPdfPages";
 import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromPdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function ExtractPdf() {
   const [pdfFiles, setPdfFiles] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [originalFile, setOriginalFile] = useState<File | null>(null);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [newProcessedFile, setNewProcessedFile] = useState<Blob | null>(null);
 
   const totalPages = pages.length;
   const canExtract = totalPages > 0 && selectedIndices.length > 0 && !loading;
@@ -123,6 +128,8 @@ export default function ExtractPdf() {
       link.remove();
       URL.revokeObjectURL(url);
 
+      setNewProcessedFile(blob);
+      setShowSuccessModal(true);
       toast.success(
         `Successfully extracted ${selectedIndices.length} ${
           selectedIndices.length === 1 ? "page" : "pages"
@@ -215,6 +222,16 @@ export default function ExtractPdf() {
           onExtract={handleExtract}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (newProcessedFile) handleExtract();
+        }}
+        title="PDF Extracted Successfully!"
+        description="Your PDF pages were successfully extracted and saved securely on your device."
+      />
     </div>
   );
 }

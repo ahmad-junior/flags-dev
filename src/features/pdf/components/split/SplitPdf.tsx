@@ -15,6 +15,8 @@ import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromP
 import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange";
 import { splitPdfFile } from "@/features/pdf/components/split/splitPdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function SplitPdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [sourcePdfFile, setSourcePdfFile] = useState<File | null>(null);
@@ -25,6 +27,8 @@ export default function SplitPdf() {
 
   const [splitMode, setSplitMode] = useState<SplitMode>("extract_all");
   const [customRangeText, setCustomRangeText] = useState("");
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const canSplit = useMemo(
     () => originalPages.length > 0 && !loading,
@@ -130,6 +134,7 @@ export default function SplitPdf() {
       } else {
         toast.success("PDF pages split and archived into ZIP successfully.");
       }
+      setShowSuccessModal(true);
     } catch (error) {
       console.error(error);
       toast.error("Failed to split PDF.");
@@ -171,6 +176,14 @@ export default function SplitPdf() {
           onApplySplit={handleApplySplit}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => handleApplySplit()}
+        title="PDF Split Successfully!"
+        description="Your PDF was split successfully and processed securely on your device."
+      />
     </div>
   );
 }

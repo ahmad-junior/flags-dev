@@ -12,9 +12,16 @@ import UnprotectPdfActions, {
 } from "@/features/pdf/components/unprotect/UnprotectPdfActions";
 import { unprotectPdfFile } from "@/features/pdf/components/unprotect/unprotectPdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function UnprotectPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [lastSettings, setLastSettings] = useState<UnprotectSettings | null>(
+    null,
+  );
 
   const canUnprotect = useMemo(
     () => files.length > 0 && !loading,
@@ -23,6 +30,7 @@ export default function UnprotectPdf() {
 
   async function handleUnprotect(settings: UnprotectSettings) {
     if (!canUnprotect || files.length === 0) return;
+    setLastSettings(settings);
 
     try {
       setLoading(true);
@@ -41,6 +49,7 @@ export default function UnprotectPdf() {
       link.remove();
       URL.revokeObjectURL(url);
 
+      setShowSuccessModal(true);
       toast.success("PDF unlocked successfully!");
     } catch {
       toast.error("Failed to unlock PDF. Please check your password.");
@@ -70,6 +79,14 @@ export default function UnprotectPdf() {
           onUnprotect={handleUnprotect}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => (lastSettings ? handleUnprotect(lastSettings) : null)}
+        title="PDF Unlocked Successfully!"
+        description="Your PDF was unlocked successfully and processed securely on your device."
+      />
     </div>
   );
 }

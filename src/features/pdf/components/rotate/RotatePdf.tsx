@@ -14,6 +14,8 @@ import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromP
 import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange";
 import { rotatePdfFile } from "@/features/pdf/components/rotate/rotatePdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function RotatePdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [sourcePdfFile, setSourcePdfFile] = useState<File | null>(null);
@@ -21,6 +23,8 @@ export default function RotatePdf() {
   const [originalPages, setOriginalPages] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [rotations, setRotations] = useState<Record<string, number>>({});
 
@@ -152,6 +156,7 @@ export default function RotatePdf() {
       link.remove();
       URL.revokeObjectURL(url);
 
+      setShowSuccessModal(true);
       toast.success("PDF pages rotated successfully.");
     } catch (error) {
       console.error(error);
@@ -215,6 +220,14 @@ export default function RotatePdf() {
           onApplyRotate={handleApplyRotate}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => handleApplyRotate()}
+        title="PDF Rotated Successfully!"
+        description="Your PDF pages were rotated successfully and processed securely on your device."
+      />
     </div>
   );
 }

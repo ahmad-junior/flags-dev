@@ -12,10 +12,14 @@ import ReorderPdfActions from "./ReorderPdfActions";
 import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromPdf"; // Shared
 import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf"; // Shared
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function ReorderPdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const canSave = useMemo(
     () => pages.length > 0 && !loading,
@@ -78,6 +82,7 @@ export default function ReorderPdf() {
 
       URL.revokeObjectURL(url);
 
+      setShowSuccessModal(true);
       toast.success("PDF reordered successfully.");
     } catch (error) {
       console.error(error);
@@ -119,6 +124,14 @@ export default function ReorderPdf() {
           onSave={handleSave}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => handleSave()}
+        title="PDF Reordered Successfully!"
+        description="Your PDF pages were successfully reordered and saved securely on your device."
+      />
     </div>
   );
 }
