@@ -16,6 +16,7 @@ import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange"
 import { splitPdfFile } from "@/features/pdf/components/split/splitPdf";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function SplitPdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
@@ -24,6 +25,7 @@ export default function SplitPdf() {
   const [originalPages, setOriginalPages] = useState<AppFile[]>([]);
   const [displayPages, setDisplayPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [splitMode, setSplitMode] = useState<SplitMode>("extract_all");
   const [customRangeText, setCustomRangeText] = useState("");
@@ -47,6 +49,7 @@ export default function SplitPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
       const rawFile = files[0].file;
       setSourcePdfFile(rawFile);
 
@@ -91,6 +94,7 @@ export default function SplitPdf() {
 
     try {
       setLoading(true);
+      setLoadingText("We're spliting PDF...");
 
       let targetIndices: number[] = [];
       if (splitMode === "custom_range") {
@@ -145,6 +149,7 @@ export default function SplitPdf() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {originalPages.length === 0 || displayPages.length === 0 ? (
           <FilePicker

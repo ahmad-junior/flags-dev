@@ -16,6 +16,7 @@ import { downloadFilesAsZip } from "@/lib/download/zip";
 import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange";
 
 import SuccessModal from "@/components/modals/SuccessModal";
+import ProcessingIndicatorModal from "@/components/modals/ProcessingIndicatorModal";
 
 export default function PdfToImage() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
@@ -25,6 +26,7 @@ export default function PdfToImage() {
   const [originalPages, setOriginalPages] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>("");
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [lastSettings, setLastSettings] = useState<ConvertSettings | null>(
@@ -47,6 +49,7 @@ export default function PdfToImage() {
 
     try {
       setLoading(true);
+      setLoadingText("We're unpacking PDF...");
       const rawFile = files[0].file;
       setSourcePdfFile(rawFile);
 
@@ -90,6 +93,7 @@ export default function PdfToImage() {
 
     try {
       setLoading(true);
+      setLoadingText("We're Extracting Images...");
 
       const { format, mode, pageRange, dpi, transparentBg } = settings;
 
@@ -160,6 +164,7 @@ export default function PdfToImage() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <ProcessingIndicatorModal isOpen={loading} text={loadingText} />
       <div className="min-w-0">
         {originalPages.length === 0 || pages.length === 0 ? (
           <FilePicker
