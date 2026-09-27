@@ -1,6 +1,6 @@
 import { FaCodeBranch, FaUser, FaGithub } from "react-icons/fa";
 import { ToolDefinition } from "@/components/tool-layout/types";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 import { STATIC_PATHS } from "@/routes";
 import Link from "next/link";
 import { Heart } from "lucide-react";

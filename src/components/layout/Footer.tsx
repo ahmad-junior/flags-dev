@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 
 import { STATIC_PATHS } from "@/routes";
 

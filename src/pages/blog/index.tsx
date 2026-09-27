@@ -1,7 +1,7 @@
 import { BookOpen, Code2, Heart, Share2, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { STATIC_PATHS } from "@/routes";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 
 export default function BlogPage() {
   return (

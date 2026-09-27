@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
 import CustomTopHeader from "@/components/layout/CustomTopHeader";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 
 import { FaGithub, FaEnvelope, FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
 
