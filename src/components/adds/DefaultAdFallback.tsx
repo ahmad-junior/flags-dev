@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Check, StarIcon, Share2, Copy, Heart } from "lucide-react";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 import Link from "next/link";
 import { SITE_URL, STATIC_PATHS } from "@/routes";
 

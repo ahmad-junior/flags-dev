@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { PUBLIC_PATHS, STATIC_PATHS } from "@/routes";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 
 const tiers = [
   {

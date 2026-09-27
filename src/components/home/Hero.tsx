@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 
 import { STATIC_PATHS } from "@/routes";
-import ExternalLinkModal from "@/components/navigation/ExternalLinkModal";
+import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
 
 const features = [
   {
