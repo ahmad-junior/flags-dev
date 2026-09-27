@@ -12,9 +12,16 @@ import ProtectPdfActions, {
 } from "@/features/pdf/components/protect/ProtectPdfActions";
 import { protectPdfFile } from "@/features/pdf/components/protect/protectPdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function ProtectPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [lastSettings, setLastSettings] = useState<ProtectSettings | null>(
+    null,
+  );
 
   const canProtect = useMemo(
     () => files.length > 0 && !loading,
@@ -23,6 +30,8 @@ export default function ProtectPdf() {
 
   async function handleProtect(settings: ProtectSettings) {
     if (!canProtect || files.length === 0) return;
+
+    setLastSettings(settings);
 
     try {
       setLoading(true);
@@ -41,6 +50,7 @@ export default function ProtectPdf() {
       link.remove();
       URL.revokeObjectURL(url);
 
+      setShowSuccessModal(true);
       toast.success("PDF protected successfully!");
     } catch (error) {
       console.error(error);
@@ -71,6 +81,18 @@ export default function ProtectPdf() {
           onProtect={handleProtect}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (lastSettings) {
+            handleProtect(lastSettings);
+          }
+        }}
+        title="PDF Protected Successfully!"
+        description="Your PDF was protected successfully and processed securely on your device."
+      />
     </div>
   );
 }

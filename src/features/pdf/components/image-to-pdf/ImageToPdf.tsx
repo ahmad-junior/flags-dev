@@ -11,9 +11,14 @@ import ImageToPdfActions from "@/features/pdf/components/image-to-pdf/ImageToPdf
 
 import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function ImageToPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [newProcessedFile, setNewProcessedFile] = useState<Blob | null>(null);
 
   const canConvert = useMemo(
     () => files.length > 0 && !loading,
@@ -54,6 +59,9 @@ export default function ImageToPdf() {
       URL.revokeObjectURL(url);
 
       toast.success("PDF created successfully.");
+
+      setShowSuccessModal(true);
+      setNewProcessedFile(blob);
     } catch (error) {
       console.error(error);
 
@@ -76,6 +84,16 @@ export default function ImageToPdf() {
           onConvert={handleConvert}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (newProcessedFile) handleConvert();
+        }}
+        title="PDF Created Successfully!"
+        description="Your images were successfully converted and saved securely on your device."
+      />
     </div>
   );
 }

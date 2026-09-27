@@ -13,17 +13,37 @@ import {
   compressPdfFile,
   CompressionLevel,
 } from "@/features/pdf/components/compress/compressPdf";
+import SuccessModal from "@/components/modals/SuccessModal";
 
 export default function CompressPdf() {
   const [files, setFiles] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [compressedFile, setCompressedFile] = useState<Blob | null>(null);
 
   const activeFile = useMemo(() => files[0]?.file || null, [files]);
   const canCompress = useMemo(
     () => !!activeFile && !loading,
     [activeFile, loading],
   );
+
+  const downloadBlob = (blob: Blob) => {
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .replace("T", "_")
+      .slice(0, 19);
+
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = `FlagsDev.com_compressed_${timestamp}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   async function handleCompress(level: CompressionLevel) {
     if (!activeFile) return;
@@ -39,6 +59,9 @@ export default function CompressPdf() {
         (currentProgress) => setProgress(currentProgress),
       );
 
+      setCompressedFile(compressedBlob);
+      setShowSuccessModal(true);
+
       const newSizeBytes = compressedBlob.size;
       const savedBytes = originalSizeBytes - newSizeBytes;
       const percentageSaved = Math.max(
@@ -46,20 +69,7 @@ export default function CompressPdf() {
         Math.round((savedBytes / originalSizeBytes) * 100),
       );
 
-      const timestamp = new Date()
-        .toISOString()
-        .replace(/[:.]/g, "-")
-        .replace("T", "_")
-        .slice(0, 19);
-
-      const link = document.createElement("a");
-      const url = URL.createObjectURL(compressedBlob);
-      link.href = url;
-      link.download = `FlagsDev.com_compressed_${timestamp}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
+      downloadBlob(compressedBlob);
 
       if (savedBytes > 0) {
         toast.success(
@@ -103,6 +113,16 @@ export default function CompressPdf() {
           onCompress={handleCompress}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (compressedFile) downloadBlob(compressedFile);
+        }}
+        title="PDF Compressed Successfully!"
+        description="Your PDF was compressed securely on your device. Nothing was uploaded."
+      />
     </div>
   );
 }

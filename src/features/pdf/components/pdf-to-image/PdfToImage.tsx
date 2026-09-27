@@ -15,6 +15,8 @@ import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromP
 import { downloadFilesAsZip } from "@/lib/download/zip";
 import { parsePageRange } from "@/features/pdf/components/shared/parsePageRange";
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function PdfToImage() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
 
@@ -24,6 +26,10 @@ export default function PdfToImage() {
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [lastSettings, setLastSettings] = useState<ConvertSettings | null>(
+    null,
+  );
   const canConvert = useMemo(
     () => pages.length > 0 && !loading,
     [pages.length, loading],
@@ -78,6 +84,9 @@ export default function PdfToImage() {
 
   async function handleConvert(settings: ConvertSettings) {
     if (!canConvert || !sourcePdfFile) return;
+
+    setLastSettings(settings);
+    setShowSuccessModal(true);
 
     try {
       setLoading(true);
@@ -182,6 +191,18 @@ export default function PdfToImage() {
           onConvert={handleConvert}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (lastSettings) {
+            handleConvert(lastSettings);
+          }
+        }}
+        title="Images Created Successfully!"
+        description="Your PDF pages were converted to images and saved securely on your device."
+      />
     </div>
   );
 }

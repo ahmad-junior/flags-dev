@@ -12,15 +12,39 @@ import DeletePdfActions from "@/features/pdf/components/delete-pages/DeletePdfAc
 import { makePagesFromPdf } from "@/features/pdf/components/shared/makePageFromPdf"; // Shared
 import { imageToPdf } from "@/features/pdf/components/shared/imageToPdf"; // Shared
 
+import SuccessModal from "@/components/modals/SuccessModal";
+
 export default function DeletePdf() {
   const [pdf, setPdf] = useState<AppFile[]>([]);
   const [pages, setPages] = useState<AppFile[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [newFile, setNewFile] = useState<Blob | null>(null);
+
   const canSave = useMemo(
     () => pages.length > 0 && !loading,
     [pages.length, loading],
   );
+
+  const downloadBlob = (blob: Blob) => {
+    const timestamp = new Date()
+      .toISOString()
+      .replace(/[:.]/g, "-")
+      .replace("T", "_")
+      .slice(0, 19);
+
+    const filename = `FlagsDev.com | extracted_${timestamp}_FlagsDev.pdf`;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
 
   async function handlePdfChange(files: AppFile[]) {
     setPdf(files);
@@ -55,28 +79,10 @@ export default function DeletePdf() {
 
       const blob = await imageToPdf(pages);
 
-      const timestamp = new Date()
-        .toISOString()
-        .replace(/[:.]/g, "-")
-        .replace("T", "_")
-        .slice(0, 19);
+      setNewFile(blob);
+      setShowSuccessModal(true);
 
-      const filename = `FlagsDev.com | extracted_${timestamp}_FlagsDev.pdf`;
-
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = filename;
-
-      document.body.appendChild(link);
-
-      link.click();
-
-      link.remove();
-
-      URL.revokeObjectURL(url);
+      downloadBlob(blob);
 
       toast.success("PDF reordered successfully.");
     } catch (error) {
@@ -119,6 +125,16 @@ export default function DeletePdf() {
           onSave={handleSave}
         />
       </aside>
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        onDownload={() => {
+          if (newFile) downloadBlob(newFile);
+        }}
+        title="PDF Reordered Successfully!"
+        description="Your PDF pages were successfully reordered and saved securely on your device."
+      />
     </div>
   );
 }
