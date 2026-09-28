@@ -1,8 +1,6 @@
 import { ComingSoonLayout } from "@/components/layout/ComingSoonLayout";
 
 import {
-  Hash,
-  FileSearch,
   Type,
   Link,
   Code,
@@ -16,33 +14,11 @@ import {
   Braces,
 } from "lucide-react";
 
+import HashGenerator from "@/features/privacy-security/components/hashing/HashGenerator";
+
 export const PRIVACY_SECURITY_TOOL_VIEWS = {
-  "text-hash": (
-    <ComingSoonLayout
-      toolName="Text Hash"
-      toolIcon={Hash}
-      description="Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512, and SHA-3 hashes from text directly in your browser."
-      keyFeatures={[
-        "Multiple hashing algorithms",
-        "Local browser-based processing",
-        "Compare and copy hash results instantly",
-      ]}
-    />
-  ),
-
-  "file-hash": (
-    <ComingSoonLayout
-      toolName="File Hash"
-      toolIcon={FileSearch}
-      description="Calculate cryptographic hashes for files locally in your browser without uploading your data to a server."
-      keyFeatures={[
-        "Hash files entirely on your device",
-        "Support for common SHA and MD algorithms",
-        "Useful for file integrity verification",
-      ]}
-    />
-  ),
-
+  "text-hash": <HashGenerator inputType="text" />,
+  "file-hash": <HashGenerator inputType="file" />,
   base64: (
     <ComingSoonLayout
       toolName="Base64 Encoder / Decoder"
