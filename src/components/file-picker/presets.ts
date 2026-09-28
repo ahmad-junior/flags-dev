@@ -19,3 +19,25 @@ export const IMAGE_PICKER = {
   multiple: true,
   maxFileSize: 25 * 1024 * 1024,
 };
+
+export const HEIC_PICKER = {
+  accept: ".heic,.heif,image/heic,image/heif",
+  title: "Select HEIC Images",
+  description: "Upload one or more HEIC images from your device.",
+  emptyStateLabel: "HEIC images",
+  supportedText: "Supports HEIC • Maximum 25 MB",
+  browseLabel: "Browse HEIC Images",
+  multiple: true,
+  maxFileSize: 25 * 1024 * 1024,
+};
+
+export const ALL_FILE_PICKER = {
+  accept: "*/*",
+  title: "Select a File",
+  description: "Upload any file to generate its cryptographic hashes.",
+  emptyStateLabel: "file",
+  supportedText: "All file types",
+  browseLabel: "Browse File",
+  multiple: false,
+  maxFileSize: 100 * 1024 * 1024,
+};

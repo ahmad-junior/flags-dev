@@ -66,7 +66,13 @@ export default function FileList({
         items={files.map((file) => file.id)}
         strategy={rectSortingStrategy}
       >
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          className={
+            files.length > 1
+              ? "grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+              : ""
+          }
+        >
           {files.map((file) => (
             <SortableFileCard
               key={file.id}
