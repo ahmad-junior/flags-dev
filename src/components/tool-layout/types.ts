@@ -43,4 +43,5 @@ export interface ToolDefinition {
 
   contributors?: ToolContributor[];
   openSource?: boolean;
+  underConstruction: boolean;
 }
