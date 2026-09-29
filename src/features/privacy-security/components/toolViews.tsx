@@ -1,7 +1,6 @@
 import { ComingSoonLayout } from "@/components/layout/ComingSoonLayout";
 
 import {
-  Type,
   Link,
   Code,
   Languages,
@@ -15,22 +14,12 @@ import {
 } from "lucide-react";
 
 import HashGenerator from "@/features/privacy-security/components/hashing/HashGenerator";
+import Base64Tool from "@/features/privacy-security/components/encoding/base64/Base64Tool";
 
 export const PRIVACY_SECURITY_TOOL_VIEWS = {
   "text-hash": <HashGenerator inputType="text" />,
   "file-hash": <HashGenerator inputType="file" />,
-  base64: (
-    <ComingSoonLayout
-      toolName="Base64 Encoder / Decoder"
-      toolIcon={Type}
-      description="Encode text to Base64 or decode Base64 data directly in your browser with no server-side processing."
-      keyFeatures={[
-        "Base64 encoding and decoding",
-        "Instant browser-based processing",
-        "Easy copy and clear controls",
-      ]}
-    />
-  ),
+  base64: <Base64Tool />,
 
   "url-encode": (
     <ComingSoonLayout
