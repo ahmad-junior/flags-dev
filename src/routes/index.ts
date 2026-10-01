@@ -15,6 +15,7 @@ export const PUBLIC_PATHS = {
   sponsor: "/sponsor",
   docs: "/docs",
   blog: "/blog",
+  founder: "/legal/founder-message",
 
   // Docs PDF Tools
   pdfHowToMerge: "/docs/pdf/how-to-merge-pdfs",
@@ -53,6 +54,7 @@ export const CANONICAL_PATHS = {
   sponsor: `${SITE_URL}${PUBLIC_PATHS.sponsor}`,
   docs: `${SITE_URL}${PUBLIC_PATHS.docs}`,
   blog: `${SITE_URL}${PUBLIC_PATHS.blog}`,
+  founder: `${SITE_URL}${PUBLIC_PATHS.founder}`,
 
   // Docs PDF Tools
   pdfHowToMerge: `${SITE_URL}${PUBLIC_PATHS.pdfHowToMerge}`,
