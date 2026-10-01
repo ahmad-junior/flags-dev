@@ -18,6 +18,7 @@ import { tools } from "@/constants/tools";
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [blogOpen, setBlogOpen] = useState(false);
 
   // Prevent body scroll
   useEffect(() => {
@@ -111,12 +112,76 @@ export default function Navigation() {
             )}
           </div>
 
-          <Link
-            href={STATIC_PATHS.blog}
-            className="rounded-lg px-3.5 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-          >
-            Blog
-          </Link>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setBlogOpen((value) => !value)}
+              aria-expanded={blogOpen}
+              className={`group flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition-all ${
+                blogOpen
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+              }`}
+            >
+              <span>Blog</span>
+
+              <ChevronDown
+                aria-hidden="true"
+                className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
+                  blogOpen ? "rotate-180 text-slate-700" : ""
+                }`}
+              />
+            </button>
+
+            {blogOpen && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Close blog menu"
+                  className="fixed inset-0 -z-10 h-full w-full cursor-default"
+                  onClick={() => setBlogOpen(false)}
+                />
+
+                <div className="absolute left-0 top-full mt-2 w-64 overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-2 shadow-2xl shadow-slate-900/10 animate-in fade-in zoom-in-95 duration-150">
+                  <Link
+                    href={STATIC_PATHS.blog}
+                    onClick={() => setBlogOpen(false)}
+                    className="group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 transition-colors hover:bg-green-50/60 hover:text-green-700"
+                  >
+                    <span>All Posts</span>
+
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-green-600"
+                    />
+                  </Link>
+
+                  <div className="my-1.5 border-t border-slate-100" />
+
+                  <Link
+                    href={STATIC_PATHS.founder}
+                    onClick={() => setBlogOpen(false)}
+                    className="group flex items-center justify-between rounded-xl px-3.5 py-2.5 transition-colors hover:bg-violet-50/60"
+                  >
+                    <div>
+                      <span className="block text-sm font-medium text-slate-800 group-hover:text-violet-700">
+                        About the Founder
+                      </span>
+
+                      <span className="text-xs text-slate-400">
+                        Meet Muhammad Ahmad
+                      </span>
+                    </div>
+
+                    <ChevronRight
+                      aria-hidden="true"
+                      className="h-4 w-4 text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-violet-600"
+                    />
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
 
           <Link
             href={STATIC_PATHS.docs}
@@ -207,6 +272,14 @@ export default function Navigation() {
                 className="block rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50"
               >
                 Blog
+              </Link>
+
+              <Link
+                href={STATIC_PATHS.founder}
+                onClick={() => setMobileOpen(false)}
+                className="ml-4 block rounded-xl px-4 py-2.5 text-sm text-slate-600 transition-colors hover:bg-violet-50 hover:text-violet-700"
+              >
+                About the Founder
               </Link>
 
               <Link

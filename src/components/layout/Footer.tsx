@@ -70,6 +70,13 @@ export default function Footer() {
               About us
             </Link>
 
+            <Link
+              href={STATIC_PATHS.founder}
+              className="transition-colors hover:text-slate-900"
+            >
+              Founder
+            </Link>
+
             <ExternalLinkModal
               href={STATIC_PATHS.gitHubRepo}
               siteName="GitHub repository"
