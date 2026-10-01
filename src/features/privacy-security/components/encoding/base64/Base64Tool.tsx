@@ -602,7 +602,7 @@ export default function Base64Tool() {
                   {formatBytes(outputSize)}
                 </span>
               )}
-              {output && (
+              {output && inputType === "text" && (
                 <button
                   type="button"
                   onClick={handleCopy}
@@ -641,7 +641,7 @@ export default function Base64Tool() {
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 shadow-sm"
+                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 shadow-sm cursor-pointer"
                 >
                   <Download className="h-4 w-4" />
                   Download File
@@ -658,7 +658,7 @@ export default function Base64Tool() {
             />
           )}
 
-          {output && (
+          {output && inputType === "text" && (
             <div className="mt-4 flex flex-wrap gap-2.5">
               <button
                 type="button"
@@ -677,7 +677,7 @@ export default function Base64Tool() {
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 shadow-sm cursor-poiner"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 shadow-sm cursor-pointer"
                 >
                   <Download className="h-4 w-4" />
                   Download .base64 File
