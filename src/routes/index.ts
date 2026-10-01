@@ -28,6 +28,11 @@ export const PUBLIC_PATHS = {
   pdfHowToUnlock: "/docs/pdf/how-to-unlock-pdfs",
   pdfHowToImageToPdf: "/docs/pdf/how-to-image-to-pdf",
   pdfHowToPdfToImage: "/docs/pdf/how-to-pdf-to-image",
+
+  // Docs Privacy & Security Tools
+  hashingToolText: "/docs/privacy-security/hashing/text",
+  hashingToolFile: "/docs/privacy-security/hashing/file",
+  base64Tool: "/docs/privacy-security/encoding/how-to-base64-studio",
 };
 
 export const STATIC_PATHS = {
@@ -61,4 +66,9 @@ export const CANONICAL_PATHS = {
   pdfHowToUnlock: `${SITE_URL}${PUBLIC_PATHS.pdfHowToUnlock}`,
   pdfHowToImageToPdf: `${SITE_URL}${PUBLIC_PATHS.pdfHowToImageToPdf}`,
   pdfHowToPdfToImage: `${SITE_URL}${PUBLIC_PATHS.pdfHowToPdfToImage}`,
+
+  // Docs Privacy & Security Tools
+  base64HowTo: `${SITE_URL}${PUBLIC_PATHS.base64Tool}`,
+  hashingToolText: `${SITE_URL}${PUBLIC_PATHS.hashingToolText}`,
+  hashingToolFile: `${SITE_URL}${PUBLIC_PATHS.hashingToolFile}`,
 };

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { ToolTab } from "@/components/tool-layout/types";
+import { PUBLIC_PATHS } from "@/routes";
 export type PrivacySecurityCategory = "hashing" | "encoding" | "cryptography";
 
 export const privacyHasingToolTabs: ToolTab[] = [
@@ -22,11 +23,19 @@ export const privacyHasingToolTabs: ToolTab[] = [
     id: "text-hash",
     label: "Text Hash",
     icon: Hash,
+    help: {
+      href: PUBLIC_PATHS.hashingToolText,
+      label: "Learn more about hashing text",
+    },
   },
   {
     id: "file-hash",
     label: "File Hash",
     icon: FileSearch,
+    help: {
+      href: PUBLIC_PATHS.hashingToolFile,
+      label: "Learn more about hashing files",
+    },
   },
 ];
 
@@ -35,6 +44,10 @@ export const privacyEncodingToolTabs: ToolTab[] = [
     id: "base64",
     label: "Base64",
     icon: Type,
+    help: {
+      href: PUBLIC_PATHS.base64Tool,
+      label: "Learn more about Base64 encoding",
+    },
   },
   {
     id: "url-encode",

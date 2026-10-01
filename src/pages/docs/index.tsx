@@ -214,12 +214,12 @@ export default function DocsIndexPage() {
                   <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {category.docs.map((doc) => {
                       const Icon = doc.icon;
-                      const targetHref = doc.help?.href || STATIC_PATHS.home;
+                      const targetHref = doc.help?.href || STATIC_PATHS.docs;
                       const descriptionText =
                         doc.help?.label ||
                         `Complete step-by-step documentation for managing ${doc.label.toLowerCase()} securely inside your browser.`;
 
-                      return (
+                      return doc.help?.href ? (
                         <Link
                           key={doc.id || doc.label}
                           href={targetHref}
@@ -230,33 +230,65 @@ export default function DocsIndexPage() {
                               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors duration-300 group-hover:bg-green-50 group-hover:text-green-600">
                                 <Icon className="h-6 w-6" />
                               </div>
-                              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-slate-100 text-slate-600 group-hover:bg-green-100 group-hover:text-green-800 transition-colors">
+
+                              <span className="rounded bg-slate-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-600 transition-colors group-hover:bg-green-100 group-hover:text-green-800">
                                 Client side
                               </span>
                             </div>
 
-                            <h4 className="mt-5 text-base font-bold text-slate-950 group-hover:text-green-700 transition-colors">
+                            <h4 className="mt-5 text-base font-bold text-slate-950 transition-colors group-hover:text-green-700">
                               {doc.label}
                             </h4>
 
-                            <p className="mt-2 text-sm leading-relaxed text-slate-600 line-clamp-2">
+                            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-600">
                               {descriptionText}
                             </p>
                           </div>
 
-                          <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                          <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
                             <span className="text-xs font-semibold uppercase tracking-wider text-green-600 group-hover:underline">
                               Read guide
                             </span>
-                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-50 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:bg-green-50 text-green-600">
+
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-50 text-green-600 opacity-0 transition-all duration-300 group-hover:bg-green-50 group-hover:opacity-100">
                               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
                             </div>
                           </div>
                         </Link>
+                      ) : (
+                        <div
+                          key={doc.id || doc.label}
+                          className="relative flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 opacity-80 shadow-xs"
+                        >
+                          <div>
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                                <Icon className="h-6 w-6" />
+                              </div>
+
+                              <span className="rounded bg-amber-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                                In development
+                              </span>
+                            </div>
+
+                            <h4 className="mt-5 text-base font-bold text-slate-900">
+                              {doc.label}
+                            </h4>
+
+                            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-slate-500">
+                              {descriptionText}
+                            </p>
+                          </div>
+
+                          <div className="mt-6 border-t border-slate-100 pt-4">
+                            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                              Under active development
+                            </span>
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
-
                   <AdsenseAd />
                 </section>
               );
