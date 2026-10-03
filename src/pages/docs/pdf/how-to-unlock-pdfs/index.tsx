@@ -7,7 +7,7 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
+import { CANONICAL_PATHS, PUBLIC_PATHS, PDF_TOOL_URLS } from "@/routes";
 
 const LAST_UPDATED = "16 September 2026";
 const READ_TIME = "5 min read";
@@ -50,7 +50,7 @@ export default function HowToUnlockPdfsPage() {
         description="Learn how to unlock a password protected PDF using the correct password and create an accessible copy of the document."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${PUBLIC_PATHS.pdfTool}#unlock`}
+        toolUrl={PDF_TOOL_URLS.unlock}
         sections={sections}
       >
         <DocsTableOfContents sections={sections} />
@@ -134,7 +134,7 @@ export default function HowToUnlockPdfsPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${PUBLIC_PATHS.pdfTool}#unlock`}
+                        href={PDF_TOOL_URLS.unlock}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         Unlock PDF tool
@@ -284,7 +284,7 @@ export default function HowToUnlockPdfsPage() {
             </p>
 
             <Link
-              href={`${PUBLIC_PATHS.pdfTool}#unlock`}
+              href={PDF_TOOL_URLS.unlock}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open Unlock PDF Tool
