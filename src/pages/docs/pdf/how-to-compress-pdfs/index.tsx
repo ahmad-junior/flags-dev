@@ -7,7 +7,7 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
+import { CANONICAL_PATHS, PUBLIC_PATHS, PDF_TOOL_URLS } from "@/routes";
 
 const LAST_UPDATED = "13 September 2026";
 const READ_TIME = "5 min read";
@@ -50,7 +50,7 @@ export default function HowToCompressPdfsPage() {
         description="Learn how to reduce PDF file size while keeping your document practical to view, share, print, and store."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${PUBLIC_PATHS.pdfTool}#compress`}
+        toolUrl={PDF_TOOL_URLS.compress}
         sections={sections}
       >
         {/* Mobile table of contents */}
@@ -165,7 +165,7 @@ export default function HowToCompressPdfsPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${PUBLIC_PATHS.pdfTool}#compress`}
+                        href={PDF_TOOL_URLS.compress}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         Compress PDF tool
@@ -321,7 +321,7 @@ export default function HowToCompressPdfsPage() {
             </p>
 
             <Link
-              href={`${PUBLIC_PATHS.pdfTool}#compress`}
+              href={PDF_TOOL_URLS.compress}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open Compress PDF Tool

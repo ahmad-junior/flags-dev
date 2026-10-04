@@ -7,7 +7,11 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
+import {
+  CANONICAL_PATHS,
+  PUBLIC_PATHS,
+  PRIVACY_SECURITY_TOOL_URLS,
+} from "@/routes";
 
 const LAST_UPDATED = "1 October 2026";
 const READ_TIME = "6 min read";
@@ -62,7 +66,7 @@ export default function HowToGenerateFileHashesPage() {
         description="Learn how to generate cryptographic hashes for files and use file checksums to verify whether file data has changed."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${PUBLIC_PATHS.privacySecurity}#file-hash`}
+        toolUrl={PRIVACY_SECURITY_TOOL_URLS.file}
         sections={sections}
       >
         <DocsTableOfContents sections={sections} />
@@ -277,7 +281,7 @@ export default function HowToGenerateFileHashesPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${PUBLIC_PATHS.privacySecurity}#file-hash`}
+                        href={PRIVACY_SECURITY_TOOL_URLS.file}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         File Hash Generator
@@ -590,7 +594,7 @@ export default function HowToGenerateFileHashesPage() {
             </p>
 
             <Link
-              href={`${PUBLIC_PATHS.privacySecurity}#file-hash`}
+              href={PRIVACY_SECURITY_TOOL_URLS.file}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open File Hash Generator

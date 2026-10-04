@@ -7,7 +7,11 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
+import {
+  CANONICAL_PATHS,
+  PUBLIC_PATHS,
+  PRIVACY_SECURITY_TOOL_URLS,
+} from "@/routes";
 
 const LAST_UPDATED = "1 October 2026";
 const READ_TIME = "10 min read";
@@ -54,7 +58,7 @@ export default function HowToUseBase64StudioPage() {
         description="Learn how to encode text and files to Base64 and decode Base64 data back into text or files using FlagsDev Base64 Studio."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${STATIC_PATHS.privacySecurity}#base64`}
+        toolUrl={PRIVACY_SECURITY_TOOL_URLS.base64}
         sections={sections}
       >
         <DocsTableOfContents sections={sections} />
@@ -164,7 +168,7 @@ export default function HowToUseBase64StudioPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${STATIC_PATHS.privacySecurity}#base64`}
+                        href={PRIVACY_SECURITY_TOOL_URLS.base64}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         Base64 Studio
@@ -397,7 +401,7 @@ export default function HowToUseBase64StudioPage() {
             For the most accurate information about how data is handled, review
             the{" "}
             <Link
-              href={STATIC_PATHS.privacy}
+              href={PUBLIC_PATHS.privacy}
               className="font-semibold text-slate-950 underline underline-offset-4"
             >
               FlagsDev Privacy Policy
@@ -420,7 +424,7 @@ export default function HowToUseBase64StudioPage() {
             </p>
 
             <Link
-              href={`${STATIC_PATHS.privacySecurity}#base64`}
+              href={PRIVACY_SECURITY_TOOL_URLS.base64}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open Base64 Studio

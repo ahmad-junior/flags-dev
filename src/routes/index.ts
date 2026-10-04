@@ -36,6 +36,26 @@ export const PUBLIC_PATHS = {
   base64Tool: "/docs/privacy-security/encoding/how-to-base64-studio",
 };
 
+export const PDF_TOOL_URLS = {
+  merge: `${PUBLIC_PATHS.pdfTool}/merge`,
+  split: `${PUBLIC_PATHS.pdfTool}/split`,
+  compress: `${PUBLIC_PATHS.pdfTool}/compress`,
+  reorder: `${PUBLIC_PATHS.pdfTool}/reorder`,
+  rotate: `${PUBLIC_PATHS.pdfTool}/rotate`,
+  deletePages: `${PUBLIC_PATHS.pdfTool}/delete`,
+  extract: `${PUBLIC_PATHS.pdfTool}/extract`,
+  protect: `${PUBLIC_PATHS.pdfTool}/protect`,
+  unlock: `${PUBLIC_PATHS.pdfTool}/unlock`,
+  pdfToImage: `${PUBLIC_PATHS.pdfTool}/pdf-to-image`,
+  imageToPdf: `${PUBLIC_PATHS.pdfTool}/image-to-pdf`,
+};
+
+export const PRIVACY_SECURITY_TOOL_URLS = {
+  text: `${PUBLIC_PATHS.privacySecurity}/hashing/text`,
+  file: `${PUBLIC_PATHS.privacySecurity}/hashing/file`,
+  base64: `${PUBLIC_PATHS.privacySecurity}/encoding/base64`,
+};
+
 export const STATIC_PATHS = {
   ...PUBLIC_PATHS,
 };
@@ -55,6 +75,24 @@ export const CANONICAL_PATHS = {
   docs: `${SITE_URL}${PUBLIC_PATHS.docs}`,
   blog: `${SITE_URL}${PUBLIC_PATHS.blog}`,
   founder: `${SITE_URL}${PUBLIC_PATHS.founder}`,
+
+  // Canonical PDF Tool URLs
+  pdfMerge: `${SITE_URL}${PDF_TOOL_URLS.merge}`,
+  pdfSplit: `${SITE_URL}${PDF_TOOL_URLS.split}`,
+  pdfCompress: `${SITE_URL}${PDF_TOOL_URLS.compress}`,
+  pdfReorder: `${SITE_URL}${PDF_TOOL_URLS.reorder}`,
+  pdfRotate: `${SITE_URL}${PDF_TOOL_URLS.rotate}`,
+  pdfDeletePages: `${SITE_URL}${PDF_TOOL_URLS.deletePages}`,
+  pdfExtract: `${SITE_URL}${PDF_TOOL_URLS.extract}`,
+  pdfProtect: `${SITE_URL}${PDF_TOOL_URLS.protect}`,
+  pdfUnlock: `${SITE_URL}${PDF_TOOL_URLS.unlock}`,
+  pdfPdfToImage: `${SITE_URL}${PDF_TOOL_URLS.pdfToImage}`,
+  pdfImageToPdf: `${SITE_URL}${PDF_TOOL_URLS.imageToPdf}`,
+
+  // Canonical Privacy Security Tool URLs
+  pSText: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.text}`,
+  pSFile: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.file}`,
+  pSBase64: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.base64}`,
 
   // Docs PDF Tools
   pdfHowToMerge: `${SITE_URL}${PUBLIC_PATHS.pdfHowToMerge}`,

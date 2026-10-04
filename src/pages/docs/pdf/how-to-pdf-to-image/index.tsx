@@ -7,7 +7,7 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
+import { CANONICAL_PATHS, PUBLIC_PATHS, PDF_TOOL_URLS } from "@/routes";
 
 const LAST_UPDATED = "16 September 2026";
 const READ_TIME = "5 min read";
@@ -54,7 +54,7 @@ export default function HowToConvertPdfToImagesPage() {
         description="Learn how to extract and convert PDF pages into high-quality PNG, JPEG, or WebP image files easily."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${PUBLIC_PATHS.pdfTool}#pdf-to-image`}
+        toolUrl={PDF_TOOL_URLS.pdfToImage}
         sections={sections}
       >
         <DocsTableOfContents sections={sections} />
@@ -168,7 +168,7 @@ export default function HowToConvertPdfToImagesPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${PUBLIC_PATHS.pdfTool}#pdf-to-image`}
+                        href={PDF_TOOL_URLS.pdfToImage}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         PDF to Image tool
@@ -331,7 +331,7 @@ export default function HowToConvertPdfToImagesPage() {
             </p>
 
             <Link
-              href={`${PUBLIC_PATHS.pdfTool}#pdf-to-image`}
+              href={PDF_TOOL_URLS.pdfToImage}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open PDF to Image Tool
