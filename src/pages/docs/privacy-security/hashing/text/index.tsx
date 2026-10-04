@@ -7,7 +7,11 @@ import DocsImage from "@/components/docs/DocsImage";
 import DocsCallout from "@/components/docs/DocsCallout";
 import DocsSteps from "@/components/docs/DocsSteps";
 import AdsenseAd from "@/components/adds/AdsenseAd";
-import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
+import {
+  CANONICAL_PATHS,
+  PUBLIC_PATHS,
+  PRIVACY_SECURITY_TOOL_URLS,
+} from "@/routes";
 
 const LAST_UPDATED = "1 October 2026";
 const READ_TIME = "5 min read";
@@ -58,7 +62,7 @@ export default function HowToGenerateTextHashesPage() {
         description="Learn how to generate MD5, SHA-1, SHA-256, SHA-384, SHA-512, and SHA-3 hashes from text using FlagsDev Text Hash Generator."
         updatedAt={LAST_UPDATED}
         readTime={READ_TIME}
-        toolUrl={`${PUBLIC_PATHS.privacySecurity}#text-hash`}
+        toolUrl={PRIVACY_SECURITY_TOOL_URLS.text}
         sections={sections}
       >
         <DocsTableOfContents sections={sections} />
@@ -257,7 +261,7 @@ export default function HowToGenerateTextHashesPage() {
                     <p>
                       Open the{" "}
                       <Link
-                        href={`${PUBLIC_PATHS.privacySecurity}#text-hash`}
+                        href={PRIVACY_SECURITY_TOOL_URLS.text}
                         className="font-semibold text-slate-950 underline underline-offset-4"
                       >
                         Text Hash Generator
@@ -495,7 +499,7 @@ export default function HowToGenerateTextHashesPage() {
             </p>
 
             <Link
-              href={`${PUBLIC_PATHS.privacySecurity}#text-hash`}
+              href={PRIVACY_SECURITY_TOOL_URLS.text}
               className="mt-6 inline-flex items-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
             >
               Open Text Hash Generator

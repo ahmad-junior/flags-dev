@@ -20,6 +20,8 @@ export interface ToolTab {
   id: string;
   label: string;
   icon: ComponentType<{ className?: string }>;
+  description: string;
+  href: string;
 
   help?: {
     href: string;

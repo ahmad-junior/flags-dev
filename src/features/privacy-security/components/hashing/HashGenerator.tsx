@@ -254,17 +254,6 @@ export default function HashGenerator({
 
   return (
     <div className="mx-auto w-full max-w-7xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8">
-      <header className="mx-auto mb-6 max-w-3xl text-center sm:mb-8">
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-          Cryptographic Hash Generator
-        </h1>
-
-        <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
-          Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512, and SHA-3-256 hashes
-          directly in your browser.
-        </p>
-      </header>
-
       <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(320px,0.85fr)_minmax(0,1.4fr)] lg:gap-6">
         <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5 lg:sticky lg:top-6">
           {inputType === "text" && (

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 
 import SEO from "@/components/SEO";
 import ToolLayout from "@/components/tool-layout/ToolLayout";
-import ToolToolbar from "@/components/tool-layout/ToolToolbar";
+import ToolCard from "@/components/tool-layout/ToolCard";
+import ToolPrivacyBanner from "@/components/tool-layout/ToolPrivacyBanner";
 import AdsenseAd from "@/components/adds/AdsenseAd";
 
 import { privacySecurityTools } from "@/features/privacy-security/toolData";
@@ -14,9 +14,8 @@ import {
   CATEGORY_TABS,
   PrivacySecurityCategory,
 } from "@/features/privacy-security/toolTabs";
-import { CANONICAL_PATHS, STATIC_PATHS } from "@/routes";
 
-import { PRIVACY_SECURITY_TOOL_VIEWS } from "@/features/privacy-security/components/toolViews";
+import { CANONICAL_PATHS } from "@/routes";
 
 const CATEGORY_TOOLS = {
   hashing: privacyHasingToolTabs,
@@ -24,103 +23,15 @@ const CATEGORY_TOOLS = {
   cryptography: privacyCryptographyToolTabs,
 };
 
-const ALL_PRIVACY_SECURITY_TABS = [
-  ...privacyHasingToolTabs,
-  ...privacyEncodingToolTabs,
-  ...privacyCryptographyToolTabs,
-];
-
 export default function Page() {
-  const router = useRouter();
-
   const [activeCategory, setActiveCategory] =
     useState<PrivacySecurityCategory>("hashing");
 
-  const [activeTool, setActiveTool] = useState("");
-
-  const activeToolTabs = CATEGORY_TOOLS[activeCategory];
+  const activeTools = CATEGORY_TOOLS[activeCategory];
 
   const activeCategoryMeta = CATEGORY_TABS.find(
     (category) => category.id === activeCategory,
   );
-
-  useEffect(() => {
-    function syncFromHash() {
-      const hash = window.location.hash.replace("#", "");
-
-      const matchedTool = ALL_PRIVACY_SECURITY_TABS.find(
-        (tab) => tab.id === hash,
-      );
-
-      if (!matchedTool) {
-        const defaultTool = privacyHasingToolTabs[0];
-
-        if (defaultTool) {
-          setActiveTool(defaultTool.id);
-          setActiveCategory("hashing");
-        }
-
-        return;
-      }
-
-      setActiveTool(matchedTool.id);
-
-      if (privacyHasingToolTabs.some((tab) => tab.id === matchedTool.id)) {
-        setActiveCategory("hashing");
-      } else if (
-        privacyEncodingToolTabs.some((tab) => tab.id === matchedTool.id)
-      ) {
-        setActiveCategory("encoding");
-      } else if (
-        privacyCryptographyToolTabs.some((tab) => tab.id === matchedTool.id)
-      ) {
-        setActiveCategory("cryptography");
-      }
-    }
-
-    syncFromHash();
-
-    window.addEventListener("hashchange", syncFromHash);
-
-    return () => {
-      window.removeEventListener("hashchange", syncFromHash);
-    };
-  }, []);
-
-  function handleCategoryChange(category: PrivacySecurityCategory) {
-    setActiveCategory(category);
-
-    const firstTool = CATEGORY_TOOLS[category][0];
-
-    if (!firstTool) {
-      return;
-    }
-
-    setActiveTool(firstTool.id);
-
-    router.replace(
-      `${STATIC_PATHS.privacySecurity}#${firstTool.id}`,
-      undefined,
-      {
-        shallow: true,
-        scroll: false,
-      },
-    );
-  }
-
-  function handleToolChange(toolId: string) {
-    setActiveTool(toolId);
-
-    router.replace(`${STATIC_PATHS.privacySecurity}#${toolId}`, undefined, {
-      shallow: true,
-      scroll: false,
-    });
-  }
-
-  const activeView =
-    PRIVACY_SECURITY_TOOL_VIEWS[
-      activeTool as keyof typeof PRIVACY_SECURITY_TOOL_VIEWS
-    ];
 
   return (
     <>
@@ -132,13 +43,36 @@ export default function Page() {
       />
 
       <ToolLayout tool={privacySecurityTools}>
-        <div className="flex flex-col gap-4">
-          <div
-            className="flex justify-center"
-            role="tablist"
-            aria-label="Privacy and Security Categories"
-          >
-            <div className="inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded border border-slate-200/80 bg-slate-100/80 p-1.5 shadow-sm no-scrollbar">
+        <div className="relative overflow-hidden py-4">
+          <div className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-96 w-96 -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-pink-500/5 blur-3xl" />
+
+          <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl" />
+
+          <div className="mb-10">
+            <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+              <div>
+                <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+                  Privacy &{" "}
+                  <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    Security Tools
+                  </span>
+                </h1>
+
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                  Powerful privacy and security utilities for hashing, encoding,
+                  cryptography, and secure data workflows. Built to run directly
+                  in your browser.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8 flex justify-center">
+            <div
+              className="inline-flex max-w-full items-center gap-0.5 overflow-x-auto rounded-xl border border-slate-200/80 bg-slate-100/80 p-1.5 shadow-sm no-scrollbar"
+              role="tablist"
+              aria-label="Privacy and Security Categories"
+            >
               {CATEGORY_TABS.map((category) => {
                 const isActive = activeCategory === category.id;
 
@@ -148,14 +82,14 @@ export default function Page() {
                     type="button"
                     role="tab"
                     aria-selected={isActive}
-                    onClick={() => handleCategoryChange(category.id)}
+                    onClick={() => setActiveCategory(category.id)}
                     className={[
-                      "group relative shrink-0 rounded px-3 sm:px-5 py-2.5 text-sm font-semibold",
+                      "group relative shrink-0 rounded-lg px-4 py-2.5 text-sm font-semibold sm:px-6",
                       "transition-all duration-200 ease-out",
-                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2",
+                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
                       isActive
-                        ? `bg-green-500 cursor-not-allowed text-white shadow-md shadow-slate-900/10`
-                        : "text-slate-500 hover:bg-white/80 hover:text-slate-800 hover:shadow-sm cursor-pointer",
+                        ? "cursor-default bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
+                        : "cursor-pointer text-slate-500 hover:bg-white/80 hover:text-slate-800 hover:shadow-sm",
                     ].join(" ")}
                   >
                     <span className="relative z-10">{category.label}</span>
@@ -168,26 +102,29 @@ export default function Page() {
               })}
             </div>
           </div>
+
           {activeCategoryMeta && (
-            <div className="text-center">
-              <p className="text-xs font-medium text-slate-500">
+            <div className="mb-8 text-center">
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-500">
                 {activeCategoryMeta.description}
               </p>
             </div>
           )}
 
-          <div className="sticky top-16 z-20 rounded-xl border border-slate-200 bg-white/95 p-1.5 shadow-sm backdrop-blur-sm">
-            <ToolToolbar
-              tabs={activeToolTabs}
-              activeTab={activeTool}
-              onTabChange={handleToolChange}
-            />
+          <div
+            role="tabpanel"
+            aria-label={`${activeCategoryMeta?.label ?? ""} tools`}
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {activeTools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
           </div>
 
-          {activeView}
+          <ToolPrivacyBanner />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-8">
           <AdsenseAd />
         </div>
       </ToolLayout>

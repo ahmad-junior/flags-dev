@@ -50,6 +50,12 @@ export const PDF_TOOL_URLS = {
   imageToPdf: `${PUBLIC_PATHS.pdfTool}/image-to-pdf`,
 };
 
+export const PRIVACY_SECURITY_TOOL_URLS = {
+  text: `${PUBLIC_PATHS.privacySecurity}/hashing/text`,
+  file: `${PUBLIC_PATHS.privacySecurity}/hashing/file`,
+  base64: `${PUBLIC_PATHS.privacySecurity}/encoding/base64`,
+};
+
 export const STATIC_PATHS = {
   ...PUBLIC_PATHS,
 };
@@ -82,6 +88,11 @@ export const CANONICAL_PATHS = {
   pdfUnlock: `${SITE_URL}${PDF_TOOL_URLS.unlock}`,
   pdfPdfToImage: `${SITE_URL}${PDF_TOOL_URLS.pdfToImage}`,
   pdfImageToPdf: `${SITE_URL}${PDF_TOOL_URLS.imageToPdf}`,
+
+  // Canonical Privacy Security Tool URLs
+  pSText: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.text}`,
+  pSFile: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.file}`,
+  pSBase64: `${SITE_URL}${PRIVACY_SECURITY_TOOL_URLS.base64}`,
 
   // Docs PDF Tools
   pdfHowToMerge: `${SITE_URL}${PUBLIC_PATHS.pdfHowToMerge}`,
