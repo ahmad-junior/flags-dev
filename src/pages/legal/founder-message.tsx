@@ -39,8 +39,6 @@ const beliefs = [
 export default function FounderPage() {
   const founderUrl = new URL(CANONICAL_PATHS.founder, SITE_URL).toString();
 
-  console.log("Founder URL:", founderUrl);
-
   return (
     <>
       <SEO
