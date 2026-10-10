@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { SITE_URL } from "@/routes";
 
 type SEOProps = {
   title?: string;
@@ -17,7 +18,7 @@ const DEFAULTS = {
   keywords:
     "FlagsDev, PDF Tools, Image Tools, Browser Tools, Open Source, Privacy, Image to PDF, Merge PDF, Split PDF, Compress PDF",
   image: "/og-image.png",
-  url: "https://flagsdev.com",
+  url: SITE_URL,
 };
 
 export default function SEO({
@@ -31,15 +32,15 @@ export default function SEO({
 }: SEOProps) {
   const seo = {
     title: title ? `${title} | FlagsDev` : DEFAULTS.title,
-
     description: description ?? DEFAULTS.description,
-
     keywords: keywords ?? DEFAULTS.keywords,
-
     image: image ?? DEFAULTS.image,
-
     url: url ?? DEFAULTS.url,
   };
+
+  const canonicalUrl = canonical
+    ? new URL(canonical, SITE_URL).href
+    : undefined;
 
   return (
     <Head>
@@ -73,7 +74,7 @@ export default function SEO({
 
       <meta property="og:image" content={seo.image} />
 
-      <meta property="og:url" content={seo.url} />
+      <meta property="og:url" content={canonicalUrl ?? seo.url} />
 
       <meta property="og:site_name" content="FlagsDev" />
 
@@ -92,7 +93,7 @@ export default function SEO({
       <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
       {/* Canonical */}
-      {canonical && <link rel="canonical" href={canonical} />}
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     </Head>
   );
 }
