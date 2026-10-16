@@ -46,6 +46,11 @@ export default function SEO({
     <Head>
       <title>{seo.title}</title>
 
+      {/* No Index in Staging only */}
+      {process.env.NEXT_PUBLIC_NOINDEX === "true" && (
+        <meta name="robots" content="noindex, nofollow" />
+      )}
+
       <meta
         name="google-site-verification"
         content="YmqCYrtofhpXCz3qOg6LE7ucjfL-0QHrQ7FwTV5Rzlw"

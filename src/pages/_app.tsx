@@ -10,6 +10,9 @@ import Navigation from "@/components/navigation/Navigation";
 
 import Footer from "@/components/layout/Footer";
 
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactNode) => ReactNode;
 };
@@ -30,6 +33,8 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5501202176561362"
         crossOrigin="anonymous"
       />
+      <Analytics />
+      <SpeedInsights />
       <Navigation />
       <main className="min-h-screen flex flex-col">
         {getLayout(<Component {...pageProps} />)}
