@@ -13,6 +13,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 import { PUBLIC_PATHS, STATIC_PATHS } from "@/routes";
 import ExternalLinkModal from "@/components/modals/ExternalLinkModal";
+import EnvironmentSwitch from "@/components/navigation/EnvironmentSwitch";
 import { tools } from "@/constants/tools";
 
 export default function Navigation() {
@@ -208,6 +209,8 @@ export default function Navigation() {
             <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110" />
             <span>Sponsor</span>
           </Link>
+
+          <EnvironmentSwitch />
         </div>
 
         <button
@@ -309,6 +312,10 @@ export default function Navigation() {
                 <Heart className="h-4 w-4 fill-rose-500 text-rose-500 transition-transform duration-200 group-hover:scale-110" />
                 <span>Sponsor</span>
               </Link>
+
+              <div className="col-span-2">
+                <EnvironmentSwitch />
+              </div>
             </div>
           </div>
         </div>
