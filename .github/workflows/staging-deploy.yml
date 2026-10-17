@@ -15,6 +15,9 @@ jobs:
     if: github.ref == 'refs/heads/stagging'
     runs-on: ubuntu-latest
 
+    # Set the environment to "Preview" for this job
+    environment: Preview
+
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -23,13 +26,6 @@ jobs:
     steps:
       - name: Checkout stagging
         uses: actions/checkout@v4
-
-      - name: Check required secrets
-        run: |
-          test -n "$VERCEL_TOKEN" || (echo "VERCEL_TOKEN is missing" && exit 1)
-          test -n "$VERCEL_ORG_ID" || (echo "VERCEL_ORG_ID is missing" && exit 1)
-          test -n "$VERCEL_PROJECT_ID" || (echo "VERCEL_PROJECT_ID is missing" && exit 1)
-          echo "Required deployment secrets are present."
 
       - uses: pnpm/action-setup@v4
         with:
