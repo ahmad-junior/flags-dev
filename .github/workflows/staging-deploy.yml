@@ -15,9 +15,21 @@ jobs:
     if: github.ref == 'refs/heads/stagging'
     runs-on: ubuntu-latest
 
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
     steps:
       - name: Checkout stagging
         uses: actions/checkout@v4
+
+      - name: Check required secrets
+        run: |
+          test -n "$VERCEL_TOKEN" || (echo "VERCEL_TOKEN is missing" && exit 1)
+          test -n "$VERCEL_ORG_ID" || (echo "VERCEL_ORG_ID is missing" && exit 1)
+          test -n "$VERCEL_PROJECT_ID" || (echo "VERCEL_PROJECT_ID is missing" && exit 1)
+          echo "Required deployment secrets are present."
 
       - uses: pnpm/action-setup@v4
         with:
@@ -39,19 +51,10 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Pull Preview configuration
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel pull --yes --environment=preview
 
       - name: Build stagging
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel build
 
       - name: Deploy stagging Preview
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel deploy --prebuilt
