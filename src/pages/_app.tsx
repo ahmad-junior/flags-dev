@@ -7,6 +7,7 @@ import type { NextPage } from "next";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import Navigation from "@/components/navigation/Navigation";
+import ServiceWorkerRegistration from "@/components/PWA/ServiceWorkerRegistration";
 
 import Footer from "@/components/layout/Footer";
 
@@ -26,6 +27,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <>
+      <ServiceWorkerRegistration />
       <Script
         id="adsense-script"
         async
