@@ -79,7 +79,7 @@ export default function OfflinePage() {
 
       reloadTimer.current = setTimeout(() => {
         window.location.replace("/");
-      }, 1500);
+      }, 3000);
     } catch {
       if (isMountedRef.current && !isRestoredRef.current) {
         setStatus("unavailable");
@@ -182,7 +182,7 @@ export default function OfflinePage() {
         noIndex={true}
       />
 
-      <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f8fafc] px-4 py-10 text-slate-900 sm:px-6">
+      <main className="relative flex min-h-screen justify-center overflow-hidden bg-[#f8fafc] px-4 py-10 text-slate-900 sm:px-6">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#94a3b80a_1px,transparent_1px),linear-gradient(to_bottom,#94a3b80a_1px,transparent_1px)] bg-[size:36px_36px]"
@@ -199,7 +199,7 @@ export default function OfflinePage() {
               href="/"
               className="text-2xl font-extrabold tracking-tight text-slate-900"
             >
-              FlagsDev Offline
+              FlagsDev
             </Link>
           </div>
 
@@ -258,7 +258,7 @@ export default function OfflinePage() {
 
                 <p className="mx-auto mt-3 max-w-[390px] text-sm leading-7 text-slate-500 sm:text-[15px]">
                   {isRestored
-                    ? "Your connection is working again. Redirecting you to FlagsDev..."
+                    ? "Your connection is working we're redirecting you to the homepage in a few seconds."
                     : "We couldn't establish a connection to our website. This may be caused by your internet connection or a temporary infrastructure issue."}
                 </p>
               </div>
@@ -371,7 +371,7 @@ export default function OfflinePage() {
                   type="button"
                   onClick={handleRetry}
                   disabled={isChecking || isRestored}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 active:scale-[0.98] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <RefreshCw
                     className={`h-4 w-4 ${isChecking ? "animate-spin" : ""}`}
