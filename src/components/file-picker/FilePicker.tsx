@@ -129,7 +129,7 @@ export default function FilePicker({
               onClick={clearFiles}
               className="cursor-pointer rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-semibold text-red-600 shadow-2xs transition hover:border-red-300 hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 active:scale-[0.98]"
             >
-              Clear All
+              {`Remove ${files.length} ${files.length === 1 ? "file" : "files"}`}
             </button>
           </div>
         </div>
