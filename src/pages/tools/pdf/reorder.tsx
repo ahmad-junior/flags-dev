@@ -4,7 +4,7 @@ import { BookOpen } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdsenseAd from "@/components/adds/AdsenseAd";
 
-import ReorderPDFTool from "@/features/pdf/components/delete-pages/DeletePdf";
+import ReorderPDFTool from "@/features/pdf/components/reorder-pages/ReorderPdf";
 import { CANONICAL_PATHS, PUBLIC_PATHS } from "@/routes";
 
 export default function Page() {
