@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import clsx from "clsx";
-import { GripVertical, Trash2 } from "lucide-react";
+import { GripVertical, Trash2, Eye, RotateCw } from "lucide-react";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 import { AppFile } from "@/components/file-picker/types";
 import { formatBytes } from "@/components/file-picker/utils";
 import { getFileTypeConfig } from "@/components/file-picker/fileTypeConfig";
+import FilePreview from "@/components/file-picker/preview/FilePreview";
 
 interface FileCardProps {
   file: AppFile;
@@ -34,128 +36,226 @@ export default function FileCard({
   onClick,
   isSelected,
 }: FileCardProps) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const config = getFileTypeConfig(file.type);
   const Icon = config.icon;
 
   const rotation = (file.metadata as { rotation?: number })?.rotation || 0;
 
+  const stopInteraction = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <article
-      onClick={onClick}
-      className={clsx(
-        "group overflow-hidden rounded-2xl border bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-lg select-none",
-        onClick && "cursor-pointer",
-        isSelected === true &&
-          "border-green-500 ring-2 ring-green-500/20 bg-green-50/10",
-        isSelected === false && "border-slate-200 opacity-60 hover:opacity-100",
-        isSelected === undefined && "border-slate-200 hover:border-green-500",
-      )}
-    >
-      <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-50 p-3 flex items-center justify-center">
-        <div
-          className="relative h-full w-full flex items-center justify-center transition-transform duration-300 ease-in-out"
-          style={{ transform: `rotate(${rotation}deg)` }}
-        >
-          {file.previewUrl ? (
-            <Image
-              src={file.previewUrl}
-              alt={file.name}
-              fill
-              unoptimized
-              draggable={false}
-              className="object-contain"
-            />
-          ) : (
+    <>
+      <div
+        onClick={onClick}
+        aria-selected={isSelected}
+        className={clsx(
+          "group relative overflow-hidden rounded-2xl border bg-white",
+          "transition-all duration-200 ease-out",
+          "hover:-translate-y-0.5 hover:shadow-lg",
+          onClick && "cursor-pointer",
+          isSelected === true &&
+            "border-green-500 bg-green-50/30 ring-2 ring-green-500/15 shadow-sm",
+          isSelected === false && "border-slate-200 hover:border-slate-300",
+          isSelected === undefined && "border-slate-200 hover:border-slate-300",
+        )}
+      >
+        <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-gradient-to-br from-slate-50 to-slate-100/70">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage:
+                "radial-gradient(#64748b 0.8px, transparent 0.8px)",
+              backgroundSize: "14px 14px",
+            }}
+          />
+
+          <div className="absolute inset-3 flex items-center justify-center">
             <div
-              className={clsx(
-                "flex h-20 w-20 items-center justify-center rounded-2xl",
-                config.backgroundClassName,
-              )}
+              className="relative h-full w-full transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+              style={{ transform: `rotate(${rotation}deg)` }}
             >
-              <Icon className={clsx("h-10 w-10", config.iconClassName)} />
+              {file.previewUrl ? (
+                <Image
+                  src={file.previewUrl}
+                  alt={file.name}
+                  fill
+                  unoptimized
+                  draggable={false}
+                  sizes="(max-width: 640px) 100vw, 320px"
+                  className="pointer-events-none select-none object-contain drop-shadow-sm"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <div
+                    className={clsx(
+                      "flex h-20 w-20 items-center justify-center",
+                      "rounded-2xl border border-white/80 shadow-sm",
+                      config.backgroundClassName,
+                    )}
+                  >
+                    <Icon className={clsx("h-10 w-10", config.iconClassName)} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="absolute inset-x-3 top-3 z-10 flex items-start justify-between">
+            {dragHandle ? (
+              <button
+                type="button"
+                {...dragHandle.attributes}
+                {...dragHandle.listeners}
+                onClick={stopInteraction}
+                className={clsx(
+                  "touch-none cursor-grab active:cursor-grabbing",
+                  "rounded-xl border border-white/80 bg-white/90 p-2",
+                  "text-slate-500 shadow-sm backdrop-blur-md",
+                  "transition hover:bg-white hover:text-slate-800",
+                )}
+                aria-label="Drag to reorder"
+                title="Drag to reorder"
+              >
+                <GripVertical className="h-4 w-4" />
+              </button>
+            ) : (
+              <span />
+            )}
+          </div>
+
+          {rotation !== 0 && (
+            <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 rounded-lg border border-white/80 bg-white/90 px-2.5 py-1.5 text-xs font-medium text-amber-700 shadow-sm backdrop-blur-md">
+              <RotateCw className="h-3.5 w-3.5" />
+              {rotation}°
+            </div>
+          )}
+
+          {isSelected === true && (
+            <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 rounded-lg bg-green-600 px-2.5 py-1.5 text-xs font-semibold text-white shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              Selected
             </div>
           )}
         </div>
 
-        <div className="absolute inset-0 pointer-events-none p-3 flex justify-between items-start z-10">
-          {dragHandle ? (
-            <button
-              type="button"
-              {...dragHandle.attributes}
-              {...dragHandle.listeners}
-              className="pointer-events-auto touch-none rounded-xl bg-white/90 p-2.5 text-slate-500 shadow-md backdrop-blur transition hover:bg-slate-100 hover:text-slate-700 cursor-grab active:cursor-grabbing"
-              aria-label="Drag to reorder page"
-            >
-              <GripVertical className="h-5 w-5" />
-            </button>
-          ) : (
-            <div />
-          )}
-
+        <div className="flex items-center gap-2 border-b border-slate-100 bg-white px-3 py-2.5">
           {topRightControl ? (
             <div
-              onPointerDown={(e) => e.stopPropagation()}
-              onTouchStart={(e) => e.stopPropagation()}
-              className="pointer-events-auto"
+              onPointerDown={stopInteraction}
+              onMouseDown={stopInteraction}
+              onTouchStart={stopInteraction}
+              className="flex flex-1 items-center gap-2"
             >
               {topRightControl}
             </div>
-          ) : onRemove ? (
-            <button
-              type="button"
-              onPointerDown={(e) => e.stopPropagation()}
-              onTouchStart={(e) => e.stopPropagation()}
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove(file.id);
-              }}
-              className="pointer-events-auto cursor-pointer flex items-center gap-2 rounded-xl bg-white/90 px-3 py-2 text-slate-600 shadow-md backdrop-blur transition-all duration-200 hover:bg-red-50 hover:text-red-600"
-            >
-              <Trash2 className="h-4 w-4 shrink-0" />
-              <span className="max-w-0 overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 transition-all duration-200 group-hover:max-w-24 group-hover:opacity-100">
-                Remove
+          ) : (
+            <>
+              <button
+                type="button"
+                onPointerDown={stopInteraction}
+                onMouseDown={stopInteraction}
+                onTouchStart={stopInteraction}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (file.previewUrl) setPreviewUrl(file.previewUrl);
+                }}
+                disabled={!file.previewUrl}
+                aria-label={`Preview ${file.name}`}
+                title="Preview image"
+                className={clsx(
+                  "group/preview flex h-9 flex-1 items-center justify-center gap-2",
+                  "rounded-lg border border-slate-200 bg-slate-50",
+                  "text-xs font-semibold text-slate-600",
+                  "transition-all duration-200",
+                  "hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700",
+                  "active:scale-[0.98]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/30",
+                  "disabled:cursor-not-allowed disabled:opacity-40",
+                )}
+              >
+                <Eye className="h-4 w-4 transition-transform duration-200 group-hover/preview:scale-110" />
+                Preview
+              </button>
+
+              {onRemove && (
+                <button
+                  type="button"
+                  onPointerDown={stopInteraction}
+                  onMouseDown={stopInteraction}
+                  onTouchStart={stopInteraction}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(file.id);
+                  }}
+                  aria-label={`Remove ${file.name}`}
+                  title="Remove file"
+                  className={clsx(
+                    "flex h-9 w-9 shrink-0 items-center justify-center",
+                    "rounded-lg border border-slate-200 bg-white",
+                    "text-slate-500 transition-all duration-200",
+                    "hover:border-red-200 hover:bg-red-50 hover:text-red-600",
+                    "active:scale-95",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/30",
+                  )}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              )}
+            </>
+          )}
+        </div>
+
+        <div className="space-y-3 p-4">
+          <div className="min-w-0">
+            <div className="flex items-start gap-2">
+              <div className="min-w-0 flex-1">
+                <h3
+                  title={file.name}
+                  className="line-clamp-2 break-all text-sm font-semibold leading-5 text-slate-800"
+                >
+                  {file.name}
+                </h3>
+              </div>
+            </div>
+
+            <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs text-slate-500">
+              <span className="font-medium">{formatBytes(file.size)}</span>
+
+              <span className="text-slate-300">•</span>
+
+              <span className="rounded-md bg-slate-100 px-1.5 py-0.5 font-medium uppercase tracking-wide text-slate-600">
+                {file.extension}
               </span>
-            </button>
-          ) : null}
+            </div>
+          </div>
+
+          {actions && (
+            <div
+              onPointerDown={stopInteraction}
+              onMouseDown={stopInteraction}
+              onTouchStart={stopInteraction}
+              className="flex flex-wrap items-center gap-2"
+            >
+              {actions}
+            </div>
+          )}
+
+          {footer && (
+            <div className="border-t border-slate-100 pt-3">{footer}</div>
+          )}
         </div>
       </div>
 
-      <div className="space-y-4 p-4">
-        <div>
-          <h3
-            title={file.name}
-            className="line-clamp-2 text-sm font-semibold text-slate-900"
-          >
-            {file.name}
-          </h3>
-
-          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-            <span>{formatBytes(file.size)}</span>
-            <span>•</span>
-            <span className="uppercase">{file.extension}</span>
-            {rotation !== 0 && (
-              <>
-                <span>•</span>
-                <span className="font-medium text-amber-600">{rotation}°</span>
-              </>
-            )}
-          </div>
-        </div>
-
-        {footer && (
-          <div className="border-t border-slate-100 pt-4">{footer}</div>
-        )}
-
-        {actions && (
-          <div
-            onPointerDown={(e) => e.stopPropagation()}
-            onTouchStart={(e) => e.stopPropagation()}
-            className="flex items-center gap-2"
-          >
-            {actions}
-          </div>
-        )}
-      </div>
-    </article>
+      <FilePreview
+        isOpen={!!previewUrl}
+        previewUrl={previewUrl}
+        rotation={rotation}
+        onClose={() => setPreviewUrl(null)}
+      />
+    </>
   );
 }
