@@ -246,7 +246,7 @@ export default function FilePicker({
       hover:border-blue-300 hover:bg-blue-50
       focus-visible:outline-none
       focus-visible:ring-2 focus-visible:ring-blue-500/30
-      active:scale-[0.98]
+      active:scale-[0.98] cursor-pointer
     "
             >
               <ArrowUpDown size={14} />
@@ -308,7 +308,7 @@ export default function FilePicker({
                         className={`
                 flex w-full items-center justify-between
                 rounded-lg px-2.5 py-2.5 text-left text-xs
-                transition-colors duration-150
+                transition-colors duration-150 cursor-pointer
                 ${
                   selected
                     ? "bg-blue-50 font-semibold text-blue-700"

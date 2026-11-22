@@ -33,16 +33,22 @@ export default function SortableFileCard({
     id: file.id,
   });
 
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: transition || "transform 250ms ease",
+    zIndex: isDragging ? 10 : undefined,
+  };
+
   return (
     <div
       ref={setNodeRef}
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-      }}
-      className={isDragging ? "opacity-50" : ""}
+      style={style}
       {...attributes}
       {...listeners}
+      className={`
+        ${isDragging ? "scale-102 shadow-2xl" : ""}
+        transition-shadow duration-300 file-reorder-animation
+      `}
     >
       <FileCard
         file={file}
