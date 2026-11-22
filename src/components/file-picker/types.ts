@@ -40,3 +40,12 @@ export interface FilePickerProps {
   onChange(files: AppFile[]): void;
   renderActions?: (file: AppFile) => ReactNode;
 }
+
+export type SortOption =
+  | null
+  | "name-asc"
+  | "name-desc"
+  | "newest"
+  | "oldest"
+  | "largest"
+  | "smallest";
