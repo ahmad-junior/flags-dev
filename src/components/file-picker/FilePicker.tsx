@@ -1,5 +1,5 @@
-import { useMemo, useRef, useCallback } from "react";
-import { Plus } from "lucide-react";
+import { useMemo, useRef, useCallback, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { toast } from "sonner";
 
 import FileDropZone from "@/components/file-picker/FileDropZone";
@@ -14,7 +14,19 @@ import {
   revokePreview,
 } from "@/components/file-picker/utils";
 
-import { FilePickerProps } from "@/components/file-picker/types";
+import { AppFile, FilePickerProps } from "@/components/file-picker/types";
+
+import { SortOption } from "@/components/file-picker/types";
+
+import { ArrowUpDown, ChevronDown, Check, Plus } from "lucide-react";
+
+const sortOptions = [
+  { value: null, label: "Custom" },
+  { value: "name-asc", label: "Name (A-Z)" },
+  { value: "name-desc", label: "Name (Z-A)" },
+  { value: "largest", label: "Largest first" },
+  { value: "smallest", label: "Smallest first" },
+] as const;
 
 export default function FilePicker({
   files,
@@ -24,9 +36,96 @@ export default function FilePicker({
 }: FilePickerProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [sortOption, setSortOption] = useState<SortOption | null>(null);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const sortButtonRef = useRef<HTMLButtonElement>(null);
+  const sortMenuRef = useRef<HTMLDivElement>(null);
+
+  const [mounted, setMounted] = useState(false);
+  const [sortPosition, setSortPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
+
   const openFilePicker = useCallback(() => {
     inputRef.current?.click();
   }, []);
+
+  useEffect(() => {
+    Promise.resolve().then(() => setMounted(true));
+  }, []);
+
+  const updateSortPosition = useCallback(() => {
+    const rect = sortButtonRef.current?.getBoundingClientRect();
+
+    if (!rect) return;
+
+    const menuWidth = 224;
+    const gap = 8;
+
+    setSortPosition({
+      top: rect.bottom + gap,
+      left: Math.max(
+        8,
+        Math.min(rect.right - menuWidth, window.innerWidth - menuWidth - 8),
+      ),
+      width: menuWidth,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isSortOpen) return;
+
+    updateSortPosition();
+
+    const handleScroll = () => {
+      setIsSortOpen(false);
+    };
+
+    window.addEventListener("resize", updateSortPosition);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", updateSortPosition);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isSortOpen, updateSortPosition]);
+
+  const sortFiles = (
+    option: SortOption | null,
+    filesToSort: AppFile[],
+  ): AppFile[] => {
+    const sorted = [...filesToSort];
+
+    switch (option ?? "name-asc") {
+      case "name-asc":
+        return sorted.sort((a, b) =>
+          a.name.localeCompare(b.name, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          }),
+        );
+
+      case "name-desc":
+        return sorted.sort((a, b) =>
+          b.name.localeCompare(a.name, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          }),
+        );
+
+      case "largest":
+        return sorted.sort((a, b) => b.size - a.size);
+
+      case "smallest":
+        return sorted.sort((a, b) => a.size - b.size);
+
+      default:
+        return sorted;
+    }
+  };
 
   const addFiles = useCallback(
     async (selected: File[]) => {
@@ -132,15 +231,113 @@ export default function FilePicker({
               {`Remove ${files.length} ${files.length === 1 ? "file" : "files"}`}
             </button>
           </div>
+          <div>
+            <button
+              ref={sortButtonRef}
+              type="button"
+              onClick={() => setIsSortOpen((prev) => !prev)}
+              aria-expanded={isSortOpen}
+              aria-haspopup="listbox"
+              className="
+      inline-flex items-center gap-2 rounded-lg
+      border border-zinc-200 bg-white px-3 py-2
+      text-xs font-medium text-zinc-700 shadow-sm
+      transition-all duration-200
+      hover:border-blue-300 hover:bg-blue-50
+      focus-visible:outline-none
+      focus-visible:ring-2 focus-visible:ring-blue-500/30
+      active:scale-[0.98]
+    "
+            >
+              <ArrowUpDown size={14} />
+              Sort:{" "}
+              {sortOptions.find((option) => option.value === sortOption)?.label}
+              <ChevronDown
+                size={14}
+                className={`transition-transform duration-200 ${
+                  isSortOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+
+          {mounted &&
+            isSortOpen &&
+            createPortal(
+              <>
+                <div
+                  className="fixed inset-0 z-[9998]"
+                  onMouseDown={() => setIsSortOpen(false)}
+                />
+
+                <div
+                  ref={sortMenuRef}
+                  role="listbox"
+                  aria-label="Sort files"
+                  style={{
+                    position: "fixed",
+                    top: sortPosition.top,
+                    left: Math.max(8, sortPosition.left),
+                    width: sortPosition.width,
+                  }}
+                  className="
+          z-[9999] rounded-xl border border-zinc-200
+          bg-white p-1.5 shadow-xl shadow-zinc-900/10
+          animate-in fade-in zoom-in-95 slide-in-from-top-2
+          duration-150
+        "
+                >
+                  <p className="px-2.5 py-2 text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
+                    Sort files by
+                  </p>
+
+                  {sortOptions.map((option) => {
+                    const selected = sortOption === option.value;
+
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        role="option"
+                        aria-selected={selected}
+                        onClick={() => {
+                          sortFiles(option.value, files);
+                          setSortOption(option.value);
+                          setIsSortOpen(false);
+                        }}
+                        className={`
+                flex w-full items-center justify-between
+                rounded-lg px-2.5 py-2.5 text-left text-xs
+                transition-colors duration-150
+                ${
+                  selected
+                    ? "bg-blue-50 font-semibold text-blue-700"
+                    : "text-zinc-700 hover:bg-zinc-50 hover:text-zinc-950"
+                }
+              `}
+                      >
+                        {option.label}
+
+                        {selected && (
+                          <Check size={14} className="text-blue-600" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>,
+              document.body,
+            )}
         </div>
       )}
 
       <FileList
-        files={files}
+        files={sortOption ? sortFiles(sortOption, files) : files}
         emptyLabel={config.emptyStateLabel}
         onRemove={removeFile}
         onReorder={onChange}
         actions={renderActions}
+        onSortOptionChange={setSortOption}
       />
     </div>
   );
