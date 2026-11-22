@@ -3,6 +3,7 @@ import SortableFileCard from "@/components/file-picker/SortableFileCard";
 import FileEmptyState from "@/components/file-picker/FileEmptyState";
 
 import { DndContext, closestCenter, DragEndEvent } from "@dnd-kit/core";
+import { SortOption } from "@/components/file-picker/types";
 
 import {
   SortableContext,
@@ -22,6 +23,8 @@ interface FileListProps {
 
   actions?: (file: AppFile) => React.ReactNode;
   footer?: (file: AppFile) => React.ReactNode;
+
+  onSortOptionChange: (option: SortOption) => void;
 }
 
 export default function FileList({
@@ -35,6 +38,7 @@ export default function FileList({
 
   actions,
   footer,
+  onSortOptionChange,
 }: FileListProps) {
   if (files.length === 0) {
     return (
@@ -54,10 +58,17 @@ export default function FileList({
     }
 
     const oldIndex = files.findIndex((file) => file.id === active.id);
-
     const newIndex = files.findIndex((file) => file.id === over.id);
 
-    onReorder(arrayMove(files, oldIndex, newIndex));
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    // Reset sorting to preserve manual ordering.
+    onSortOptionChange(null);
+
+    // Apply the new manual order.
+    const reorderedFiles = arrayMove(files, oldIndex, newIndex);
+
+    onReorder(reorderedFiles);
   }
 
   return (
