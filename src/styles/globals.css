@@ -6,6 +6,10 @@ html {
   user-select: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .font-playfair {
   font-family: "Playfair Display", serif;
 }
