@@ -155,7 +155,7 @@ export const privacySecurityTools = {
   lastUpdated: "28 September 2026",
 
   openSource: true,
-  underConstruction: true,
+  underConstruction: false,
 
   contributors: [
     {
