@@ -1,8 +1,12 @@
 import { Monitor, Mic, Camera } from "lucide-react";
 
-import { valueLabel, defaultSettingInterface } from "@/features/recorder/types";
+import {
+  valueLabel,
+  defaultSettingInterface,
+  RecordingSourceCard,
+} from "@/features/recorder/types";
 
-export const recordingSourceCards = [
+export const recordingSourceCards: RecordingSourceCard[] = [
   {
     id: "screen" as const,
     title: "Screen",
