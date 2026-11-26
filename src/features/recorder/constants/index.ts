@@ -1,10 +1,12 @@
-import { Monitor, Mic, Camera } from "lucide-react";
+import { Camera, Globe, LockKeyhole, Mic, Monitor, Video } from "lucide-react";
 
 import {
   valueLabel,
   defaultSettingInterface,
   RecordingSourceCard,
 } from "@/features/recorder/types";
+
+import { CheckStatus, CheckMeta, CardPhase } from "@/features/recorder/types";
 
 export const recordingSourceCards: RecordingSourceCard[] = [
   {
@@ -61,4 +63,63 @@ export const defaultSettings: defaultSettingInterface = {
   format: "webm",
   advanced: false,
   notice: "",
+};
+
+// preflight
+export const SUPPORTED_MIME_TYPES = [
+  "video/webm;codecs=vp9,opus",
+  "video/webm;codecs=vp8,opus",
+  "video/webm",
+  "video/mp4",
+];
+
+export const AUTO_CONTINUE_SECONDS = 3;
+export const CHECK_STEP_MS = 100;
+
+export const statusStyles: Record<CheckStatus, string> = {
+  ready: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  prompt: "bg-blue-50 text-blue-700 border-blue-200",
+  denied: "bg-amber-50 text-amber-700 border-amber-200",
+  unavailable: "bg-slate-100 text-slate-600 border-slate-200",
+  unknown: "bg-slate-100 text-slate-600 border-slate-200",
+  error: "bg-red-50 text-red-700 border-red-200",
+};
+
+export const statusLabels: Record<CheckStatus, string> = {
+  ready: "Ready",
+  prompt: "Not requested",
+  denied: "Blocked",
+  unavailable: "Unavailable",
+  unknown: "Unknown",
+  error: "Failed",
+};
+
+// Display order: checks are revealed from top to bottom.
+export const CHECKS: CheckMeta[] = [
+  {
+    id: "secure",
+    title: "Secure connection",
+    icon: LockKeyhole,
+    required: true,
+  },
+  { id: "screen", title: "Screen capture", icon: Monitor, required: true },
+  { id: "recorder", title: "Video recording", icon: Video, required: true },
+  { id: "codec", title: "Recording format", icon: Globe, required: true },
+  { id: "microphone", title: "Microphone", icon: Mic, required: false },
+  { id: "camera", title: "Camera", icon: Camera, required: false },
+];
+
+export const REQUIRED_COUNT = CHECKS.filter((check) => check.required).length;
+
+export const primaryButton =
+  "flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-4 font-bold text-white shadow-lg shadow-indigo-200 transition hover:from-indigo-700 hover:to-violet-700 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none";
+
+export const secondaryButton =
+  "flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-50";
+
+export const cardStyles: Record<CardPhase, string> = {
+  waiting: "border-slate-200 opacity-50",
+  checking:
+    "border-indigo-400 shadow-lg shadow-indigo-100 ring-4 ring-indigo-50",
+  done: "border-slate-200 shadow-sm",
 };

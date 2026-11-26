@@ -23,3 +23,47 @@ export interface defaultSettingInterface {
   advanced: boolean;
   notice: string;
 }
+
+// Preflight
+export type CheckStatus =
+  | "ready"
+  | "prompt"
+  | "denied"
+  | "unavailable"
+  | "unknown"
+  | "error";
+
+export type CheckId =
+  | "secure"
+  | "screen"
+  | "recorder"
+  | "codec"
+  | "microphone"
+  | "camera";
+
+export interface CheckItem {
+  id: CheckId;
+  title: string;
+  description: string;
+  status: CheckStatus;
+  required: boolean;
+}
+
+export interface PreflightResult {
+  checks: CheckItem[];
+  canContinue: boolean;
+}
+
+export interface RecorderPreflightProps {
+  onContinue: () => void;
+}
+
+export interface CheckMeta {
+  id: CheckId;
+  title: string;
+  icon: LucideIcon;
+  required: boolean;
+}
+
+export type CardPhase = "waiting" | "checking" | "done";
+export type DeviceId = "microphone" | "camera";
