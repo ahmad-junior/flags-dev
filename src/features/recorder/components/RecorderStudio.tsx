@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Mic,
   Settings2,
@@ -6,9 +6,15 @@ import {
   Circle,
   ChevronDown,
   Check,
+  Loader2,
 } from "lucide-react";
 
-import { RecordingSource } from "@/features/recorder/types";
+import {
+  CheckStatus,
+  RecordingSource,
+  DeviceId,
+} from "@/features/recorder/types";
+import PermissionHelp from "@/features/recorder/components/PermissionHelp";
 
 import {
   recordingSourceCards,
@@ -18,6 +24,11 @@ import {
   outputFormatOptions,
   advancedFPSOptions,
 } from "@/features/recorder/constants";
+
+import {
+  ensureDevicePermission,
+  getPermissionStatus,
+} from "@/features/recorder/lib/permissions";
 
 export default function RecorderStudio() {
   const [sources, setSources] = useState<RecordingSource[]>(
@@ -30,12 +41,62 @@ export default function RecorderStudio() {
   const [advanced, setAdvanced] = useState(defaultSettings.advanced);
   const [notice, setNotice] = useState(defaultSettings.notice);
 
-  const toggleSource = (source: RecordingSource) => {
+  const [pending, setPending] = useState<RecordingSource | null>(null);
+
+  useEffect(() => {
+    const verifyDefaults = async () => {
+      for (const id of ["microphone", "camera"] as const) {
+        if ((await getPermissionStatus(id)) !== "ready") {
+          setSources((current) => current.filter((item) => item !== id));
+        }
+      }
+    };
+
+    void verifyDefaults();
+  }, []);
+
+  const [help, setHelp] = useState<{
+    device: DeviceId;
+    status: CheckStatus;
+    attempts: number;
+  } | null>(null);
+
+  const selectDevice = useCallback((device: DeviceId) => {
     setSources((current) =>
-      current.includes(source)
-        ? current.filter((item) => item !== source)
-        : [...current, source],
+      current.includes(device) ? current : [...current, device],
     );
+    setHelp(null);
+  }, []);
+
+  const closeHelp = useCallback(() => setHelp(null), []);
+
+  const requestSource = async (device: DeviceId) => {
+    setPending(device);
+    const status = await ensureDevicePermission(device);
+    setPending(null);
+
+    if (status === "ready") {
+      selectDevice(device);
+      return;
+    }
+
+    setHelp((current) => ({
+      device,
+      status,
+      attempts: current?.device === device ? current.attempts + 1 : 1,
+    }));
+  };
+
+  const toggleSource = (source: RecordingSource) => {
+    setNotice("");
+
+    if (sources.includes(source)) {
+      setSources((current) => current.filter((item) => item !== source));
+    } else if (source === "screen") {
+      setSources((current) => [...current, source]);
+    } else {
+      void requestSource(source);
+    }
   };
 
   return (
@@ -58,14 +119,17 @@ export default function RecorderStudio() {
               {recordingSourceCards.map((source) => {
                 const Icon = source.icon;
                 const selected = sources.includes(source.id);
+                const waiting = pending === source.id;
 
                 return (
                   <button
                     key={source.id}
                     type="button"
                     onClick={() => toggleSource(source.id)}
+                    disabled={pending !== null && source.id !== "screen"}
                     aria-pressed={selected}
-                    className={`relative flex min-h-48 flex-col items-center justify-center rounded-2xl border-2 p-5 text-center transition-all ${
+                    aria-busy={waiting}
+                    className={`relative flex min-h-48 flex-col items-center justify-center rounded-2xl border-2 p-5 text-center transition-all disabled:cursor-wait ${
                       selected
                         ? "border-indigo-500 bg-indigo-50/50 shadow-sm"
                         : "border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50"
@@ -78,7 +142,11 @@ export default function RecorderStudio() {
                           : "border-slate-300 text-transparent"
                       }`}
                     >
-                      {selected && <Check className="h-4 w-4" />}
+                      {waiting ? (
+                        <Loader2 className="h-4 w-4 animate-spin text-indigo-600" />
+                      ) : (
+                        selected && <Check className="h-4 w-4" />
+                      )}
                     </span>
 
                     <Icon
@@ -92,7 +160,9 @@ export default function RecorderStudio() {
                     </span>
 
                     <span className="mt-2 max-w-48 text-sm leading-relaxed text-slate-500">
-                      {source.description}
+                      {waiting
+                        ? "Waiting for permission..."
+                        : source.description}
                     </span>
                   </button>
                 );
@@ -219,7 +289,7 @@ export default function RecorderStudio() {
             <div className="mt-6">
               <button
                 type="button"
-                disabled={!sources.includes("screen")}
+                disabled={!sources.includes("screen") || pending !== null}
                 onClick={() =>
                   setNotice(
                     "Recording engine will be connected in the next implementation phase.",
@@ -247,6 +317,18 @@ export default function RecorderStudio() {
           </div>
         </section>
       </div>
+
+      {help && (
+        <PermissionHelp
+          device={help.device}
+          status={help.status}
+          attempts={help.attempts}
+          busy={pending !== null}
+          onRetry={() => void requestSource(help.device)}
+          onGranted={selectDevice}
+          onClose={closeHelp}
+        />
+      )}
     </main>
   );
 }
