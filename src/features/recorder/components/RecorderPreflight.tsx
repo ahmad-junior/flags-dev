@@ -19,7 +19,6 @@ import {
   CardPhase,
 } from "@/features/recorder/types";
 import {
-  SUPPORTED_MIME_TYPES,
   AUTO_CONTINUE_SECONDS,
   CHECK_STEP_MS,
   statusStyles,
@@ -35,6 +34,7 @@ import {
   requestDevicePermissionFromBrowser,
   getPermissionStatus,
 } from "@/features/recorder/lib/permissions";
+import { getOutputFormatOptions } from "@/features/recorder/lib/formats";
 
 async function inspectBrowser(): Promise<PreflightResult> {
   const secure = window.isSecureContext;
@@ -43,9 +43,7 @@ async function inspectBrowser(): Promise<PreflightResult> {
 
   const recorderSupported = typeof MediaRecorder !== "undefined";
 
-  const supportedMime = recorderSupported
-    ? SUPPORTED_MIME_TYPES.find((type) => MediaRecorder.isTypeSupported(type))
-    : undefined;
+  const formats = getOutputFormatOptions();
 
   const userMediaSupported = Boolean(navigator.mediaDevices?.getUserMedia);
 
@@ -85,10 +83,10 @@ async function inspectBrowser(): Promise<PreflightResult> {
     {
       id: "codec",
       title: "Recording format",
-      description: supportedMime
-        ? `Supported format: ${supportedMime}`
+      description: formats.length
+        ? `Supported formats: ${formats.map((f) => f.label).join(", ")}`
         : "No supported recording format was detected.",
-      status: supportedMime ? "ready" : "error",
+      status: formats.length ? "ready" : "error",
       required: true,
     },
     getDeviceCheck(

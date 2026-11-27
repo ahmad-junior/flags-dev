@@ -2,17 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import type { CheckStatus, DeviceId } from "@/features/recorder/types";
-
-interface PermissionHelpProps {
-  device: DeviceId;
-  status: CheckStatus;
-  attempts: number;
-  busy: boolean;
-  onRetry: () => void;
-  onGranted: (device: DeviceId) => void;
-  onClose: () => void;
-}
+import type { PermissionHelpProps } from "@/features/recorder/types";
 
 export default function PermissionHelp({
   device,

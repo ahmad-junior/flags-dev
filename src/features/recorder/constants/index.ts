@@ -29,23 +29,11 @@ export const recordingSourceCards: RecordingSourceCard[] = [
   },
 ];
 
-export const videoQualityOptions: valueLabel[] = [
-  { value: "source", label: "Original source" },
-  { value: "1080p", label: "1080p" },
-  { value: "720p", label: "720p" },
-  { value: "480p", label: "480p" },
-];
-
 export const audioOptions: valueLabel[] = [
   { value: "microphone", label: "Microphone" },
   { value: "system", label: "System / tab audio" },
   { value: "both", label: "Microphone + system audio" },
   { value: "none", label: "No audio" },
-];
-
-export const outputFormatOptions: valueLabel[] = [
-  { value: "webm", label: "WebM" },
-  { value: "mp4", label: "MP4 (if supported)" },
 ];
 
 export const advancedFPSOptions: valueLabel[] = [
@@ -65,14 +53,54 @@ export const defaultSettings: defaultSettingInterface = {
   notice: "",
 };
 
-// preflight
-export const SUPPORTED_MIME_TYPES = [
-  "video/webm;codecs=vp9,opus",
-  "video/webm;codecs=vp8,opus",
-  "video/webm",
-  "video/mp4",
+export type OutputFormat = "webm" | "mp4";
+
+export const OUTPUT_FORMATS: {
+  value: OutputFormat;
+  label: string;
+  mimeTypes: string[];
+}[] = [
+  {
+    value: "webm",
+    label: "WebM",
+    mimeTypes: [
+      "video/webm;codecs=vp9,opus",
+      "video/webm;codecs=vp8,opus",
+      "video/webm",
+    ],
+  },
+  {
+    value: "mp4",
+    label: "MP4",
+    mimeTypes: [
+      "video/mp4;codecs=avc1.42E01E,mp4a.40.2",
+      "video/mp4;codecs=avc1,mp4a",
+      "video/mp4",
+    ],
+  },
 ];
 
+export type Quality = "auto" | "2160p" | "1440p" | "1080p" | "720p";
+
+export const QUALITY_PRESETS: {
+  value: Quality;
+  label: string;
+  height?: number;
+  bitrate: number;
+}[] = [
+  { value: "auto", label: "Auto (source)", bitrate: 8_000_000 },
+  { value: "2160p", label: "4K (2160p)", height: 2160, bitrate: 20_000_000 },
+  { value: "1440p", label: "2K (1440p)", height: 1440, bitrate: 12_000_000 },
+  {
+    value: "1080p",
+    label: "Full HD (1080p)",
+    height: 1080,
+    bitrate: 8_000_000,
+  },
+  { value: "720p", label: "HD (720p)", height: 720, bitrate: 5_000_000 },
+];
+
+// preflight
 export const AUTO_CONTINUE_SECONDS = 3;
 export const CHECK_STEP_MS = 100;
 

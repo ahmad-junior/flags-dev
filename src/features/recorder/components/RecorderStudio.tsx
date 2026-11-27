@@ -16,13 +16,16 @@ import {
 } from "@/features/recorder/types";
 import PermissionHelp from "@/features/recorder/components/PermissionHelp";
 
+import { useOutputFormats } from "@/features/recorder/hooks/useOutputFormats";
+import { useQualityOptions } from "@/features/recorder/hooks/useQualityOptions";
+
 import {
   recordingSourceCards,
-  videoQualityOptions,
   defaultSettings,
   audioOptions,
-  outputFormatOptions,
   advancedFPSOptions,
+  OutputFormat,
+  Quality,
 } from "@/features/recorder/constants";
 
 import {
@@ -31,17 +34,33 @@ import {
 } from "@/features/recorder/lib/permissions";
 
 export default function RecorderStudio() {
+  const formatOptions = useOutputFormats();
+
   const [sources, setSources] = useState<RecordingSource[]>(
     defaultSettings.sources,
   );
-  const [quality, setQuality] = useState(defaultSettings.quality);
+
+  const qualityOptions = useQualityOptions();
+  const [quality, setQuality] = useState<Quality>(
+    defaultSettings.quality as Quality,
+  );
+
   const [fps, setFps] = useState(defaultSettings.fps);
   const [audio, setAudio] = useState(defaultSettings.audio);
-  const [format, setFormat] = useState(defaultSettings.format);
+  const [format, setFormat] = useState<OutputFormat>(
+    defaultSettings.format as OutputFormat,
+  );
   const [advanced, setAdvanced] = useState(defaultSettings.advanced);
   const [notice, setNotice] = useState(defaultSettings.notice);
 
   const [pending, setPending] = useState<RecordingSource | null>(null);
+
+  const activeFormat =
+    formatOptions.find((o) => o.value === format)?.value ??
+    formatOptions[0]?.value;
+
+  const activePreset =
+    qualityOptions.find((o) => o.value === quality) ?? qualityOptions[0];
 
   useEffect(() => {
     const verifyDefaults = async () => {
@@ -208,11 +227,11 @@ export default function RecorderStudio() {
                   </span>
 
                   <select
-                    value={quality}
-                    onChange={(e) => setQuality(e.target.value)}
+                    value={activePreset.value}
+                    onChange={(e) => setQuality(e.target.value as Quality)}
                     className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
                   >
-                    {videoQualityOptions.map(({ value, label }) => (
+                    {qualityOptions.map(({ value, label }) => (
                       <option key={value} value={value}>
                         {label}
                       </option>
@@ -246,11 +265,15 @@ export default function RecorderStudio() {
                   </span>
 
                   <select
-                    value={format}
-                    onChange={(e) => setFormat(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                    value={activeFormat ?? ""}
+                    onChange={(e) => setFormat(e.target.value as OutputFormat)}
+                    disabled={formatOptions.length === 0}
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {outputFormatOptions.map(({ value, label }) => (
+                    {formatOptions.length === 0 && (
+                      <option value="">No supported format</option>
+                    )}
+                    {formatOptions.map(({ value, label }) => (
                       <option key={value} value={value}>
                         {label}
                       </option>
@@ -289,7 +312,11 @@ export default function RecorderStudio() {
             <div className="mt-6">
               <button
                 type="button"
-                disabled={!sources.includes("screen") || pending !== null}
+                disabled={
+                  !sources.includes("screen") ||
+                  !activeFormat ||
+                  pending !== null
+                }
                 onClick={() =>
                   setNotice(
                     "Recording engine will be connected in the next implementation phase.",
