@@ -67,3 +67,14 @@ export interface CheckMeta {
 
 export type CardPhase = "waiting" | "checking" | "done";
 export type DeviceId = "microphone" | "camera";
+
+// Permission Help
+export interface PermissionHelpProps {
+  device: DeviceId;
+  status: CheckStatus;
+  attempts: number;
+  busy: boolean;
+  onRetry: () => void;
+  onGranted: (device: DeviceId) => void;
+  onClose: () => void;
+}
