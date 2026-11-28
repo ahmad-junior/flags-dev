@@ -9,6 +9,7 @@ export const PUBLIC_PATHS = {
   about: "/legal/about",
   tools: "/tools",
   pdfTool: "/tools/pdf",
+  recorderTool: "/tools/recorder",
   privacySecurity: "/tools/privacy-security",
   converterTool: "/tools/converter",
   gitHubRepo: "https://github.com/ahmad-junior/flags-dev",
@@ -111,4 +112,7 @@ export const CANONICAL_PATHS = {
   base64HowTo: `${SITE_URL}${PUBLIC_PATHS.base64Tool}`,
   hashingToolText: `${SITE_URL}${PUBLIC_PATHS.hashingToolText}`,
   hashingToolFile: `${SITE_URL}${PUBLIC_PATHS.hashingToolFile}`,
+
+  // Recorder Tool
+  recorder: `${SITE_URL}${PUBLIC_PATHS.recorderTool}`,
 };
