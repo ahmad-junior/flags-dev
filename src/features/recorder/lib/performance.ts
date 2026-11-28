@@ -2,12 +2,12 @@ import { getSupportedMimeType } from "@/features/recorder/lib/formats";
 import type { OutputFormat } from "@/features/recorder/constants";
 
 const TIERS = {
-  low: { height: 720, fps: 30 },
-  mid: { height: 1080, fps: 30 },
+  low: { height: 1080, fps: 30 },
+  mid: { height: 1440, fps: 30 },
   high: { height: 2160, fps: 60 },
 };
 
-const AUTO_MAX_HEIGHT = 1080;
+const PREFER_VP9 = false;
 
 function getDeviceTier() {
   const cores = navigator.hardwareConcurrency || 4;
@@ -36,26 +36,29 @@ export function getSafeCaptureSettings(requested: {
   const limit = TIERS[getDeviceTier()];
 
   const heightLimit = requested.camera
-    ? Math.min(limit.height, 1080)
+    ? Math.min(limit.height, 1440)
     : limit.height;
   const fpsLimit = requested.camera ? 30 : limit.fps;
 
-  const maxHeight = Math.min(requested.height ?? AUTO_MAX_HEIGHT, heightLimit);
+  const maxHeight = Math.min(requested.height ?? heightLimit, heightLimit);
   const frameRate = Math.min(requested.frameRate, fpsLimit);
 
   return {
     maxHeight,
     frameRate,
-    videoBitsPerSecond: Math.min(requested.bitrate, maxBitrate(maxHeight)),
+    videoBitsPerSecond: requested.height
+      ? Math.min(requested.bitrate, maxBitrate(maxHeight))
+      : maxBitrate(maxHeight),
     limited:
       (requested.height ?? 0) > maxHeight || requested.frameRate > frameRate,
   };
 }
 
 export function getLightMimeType(format: OutputFormat) {
-  const vp8 = "video/webm;codecs=vp8,opus";
+  const codec = PREFER_VP9 ? "vp9" : "vp8";
+  const webm = `video/webm;codecs=${codec},opus`;
 
-  return format === "webm" && MediaRecorder.isTypeSupported(vp8)
-    ? vp8
+  return format === "webm" && MediaRecorder.isTypeSupported(webm)
+    ? webm
     : getSupportedMimeType(format);
 }

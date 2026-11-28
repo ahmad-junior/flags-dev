@@ -45,7 +45,7 @@ export const advancedFPSOptions: valueLabel[] = [
 
 export const defaultSettings: defaultSettingInterface = {
   sources: ["screen"],
-  quality: "1080p",
+  quality: "auto",
   fps: "30",
   audio: "none",
   format: "webm",
