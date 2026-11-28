@@ -89,7 +89,6 @@ export default function RecorderStudio() {
         : "",
     );
 
-    // No await before this call: screen sharing needs the click
     void engine.start({
       mimeType: getLightMimeType(activeFormat),
       maxHeight: safe.maxHeight,
@@ -97,7 +96,6 @@ export default function RecorderStudio() {
       frameRate: safe.frameRate,
       microphone: sources.includes("microphone"),
       camera,
-      // Match this to the values in your audioOptions
       systemAudio: String(audio).includes("system"),
     });
   };
@@ -138,7 +136,7 @@ export default function RecorderStudio() {
     } catch (error) {
       console.warn(`Could not access the ${device}`, error);
     } finally {
-      setPending(null); // never leave the buttons locked
+      setPending(null);
     }
 
     if (status === "ready") {
@@ -329,15 +327,14 @@ export default function RecorderStudio() {
                   </span>
 
                   <button
-                    value={audio}
+                    type="button"
                     className="w-full rounded-xl border border-slate-200 bg-green-50 px-4 py-3 text-sm text-slate-800 outline-none"
                     disabled
                   >
-                    <option value={audio}>
-                      {sources.includes("microphone")
-                        ? audio.toUpperCase()
-                        : "No Audio"}
-                    </option>
+                    {sources.includes("microphone")
+                      ? (audioOptions.find((option) => option.value === audio)
+                          ?.label ?? "Default microphone")
+                      : "No Audio"}
                   </button>
 
                   {showMicrophoneOptions && (
