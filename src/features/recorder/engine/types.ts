@@ -110,3 +110,8 @@ export type StorageResponse =
   | { type: "closed" }
   | { type: "write-failed"; message: string }
   | { type: "failed"; message: string };
+
+export interface Preview {
+  thumbnail: string | null;
+  durationMs: number;
+}

@@ -13,3 +13,16 @@ export function getOutputFormatOptions() {
     ({ value, label }) => ({ value, label }),
   );
 }
+
+export function formatTime(ms: number) {
+  const total = Math.floor(ms / 1000);
+
+  return [Math.floor(total / 3600), Math.floor(total / 60) % 60, total % 60]
+    .map((part) => String(part).padStart(2, "0"))
+    .join(":");
+}
+
+export const formatSize = (bytes: number) =>
+  bytes < 1024 ** 3
+    ? `${(bytes / 1024 ** 2).toFixed(1)} MB`
+    : `${(bytes / 1024 ** 3).toFixed(2)} GB`;

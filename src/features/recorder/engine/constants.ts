@@ -12,9 +12,12 @@ export const FALLBACK_MIME_TYPES = [
 ];
 
 export const DIRECTORY = "recordings";
-export const LOCK_PREFIX = "recording:";
+export const LOCK_PREFIX = "Flagsdev-recording:";
 export const MAX_PENDING_BYTES = 256 * 1024 * 1024;
 export const MAX_MEMORY_BYTES = 1024 * 1024 * 1024;
+export const HEAD_BYTES = 64 * 1024;
+export const MAX_TAIL_BYTES = 64 * 1024 * 1024;
+export const EXTENSION = /\.(webm|mp4)$/i;
 
 export const FLUSH_INTERVAL_MS = 5000;
 
