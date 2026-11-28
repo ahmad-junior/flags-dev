@@ -11,7 +11,7 @@ import {
   deleteSavedRecording,
   listSavedRecordings,
 } from "@/features/recorder/engine/storage";
-import type { SavedRecording } from "@/features/recorder/engine/types";
+import type { SavedRecording, Preview } from "@/features/recorder/engine/types";
 import {
   downloadSavedRecording,
   getPreview,
@@ -19,7 +19,6 @@ import {
   renameRecording,
   splitName,
   validateName,
-  type Preview,
 } from "@/features/recorder/lib/library";
 
 interface Editing {
