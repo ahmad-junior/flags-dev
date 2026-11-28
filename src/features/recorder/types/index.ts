@@ -21,7 +21,6 @@ export interface defaultSettingInterface {
   audio: string;
   format: string;
   advanced: boolean;
-  notice: string;
 }
 
 // Preflight

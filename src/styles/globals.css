@@ -10,6 +10,14 @@ button {
   cursor: pointer;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 .font-playfair {
   font-family: "Playfair Display", serif;
 }
