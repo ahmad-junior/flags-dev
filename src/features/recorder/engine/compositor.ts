@@ -51,7 +51,7 @@ export function createCompositor(
     );
   };
 
-  const useFallbackTimer = () => {
+  const fallbackToTimer = () => {
     ticker?.terminate();
     ticker = null;
     fallback ??= setInterval(draw, interval);
@@ -92,10 +92,10 @@ export function createCompositor(
         type: "module",
       });
       ticker.onmessage = draw;
-      ticker.onerror = useFallbackTimer;
+      ticker.onerror = fallbackToTimer;
       ticker.postMessage(interval);
     } catch {
-      useFallbackTimer();
+      fallbackToTimer();
     }
   };
 
