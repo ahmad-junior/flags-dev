@@ -17,8 +17,8 @@ export const recordingSourceCards: RecordingSourceCard[] = [
   },
   {
     id: "microphone" as const,
-    title: "Microphone",
-    description: "Capture your voice with high quality",
+    title: "Audio Input",
+    description: "Capture audio from your microphone or an external device",
     icon: Mic,
   },
   {
@@ -47,10 +47,9 @@ export const defaultSettings: defaultSettingInterface = {
   sources: ["screen"],
   quality: "1080p",
   fps: "30",
-  audio: "microphone",
+  audio: "none",
   format: "webm",
   advanced: false,
-  notice: "",
 };
 
 export type OutputFormat = "webm" | "mp4";

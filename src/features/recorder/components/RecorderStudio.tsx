@@ -3,10 +3,10 @@ import {
   Mic,
   Settings2,
   FileVideo,
-  Circle,
   ChevronDown,
   Check,
   Loader2,
+  X,
 } from "lucide-react";
 
 import {
@@ -18,6 +18,13 @@ import PermissionHelp from "@/features/recorder/components/PermissionHelp";
 
 import { useOutputFormats } from "@/features/recorder/hooks/useOutputFormats";
 import { useQualityOptions } from "@/features/recorder/hooks/useQualityOptions";
+
+import { useRecorder } from "@/features/recorder/hooks/useRecorder";
+import RecordingPanel from "@/features/recorder/components/RecordingPanel";
+import {
+  getLightMimeType,
+  getSafeCaptureSettings,
+} from "@/features/recorder/lib/performance";
 
 import {
   recordingSourceCards,
@@ -51,9 +58,10 @@ export default function RecorderStudio() {
     defaultSettings.format as OutputFormat,
   );
   const [advanced, setAdvanced] = useState(defaultSettings.advanced);
-  const [notice, setNotice] = useState(defaultSettings.notice);
 
   const [pending, setPending] = useState<RecordingSource | null>(null);
+  const [limitNote, setLimitNote] = useState("");
+  const [showMicrophoneOptions, setShowMicrophoneOptions] = useState(false);
 
   const activeFormat =
     formatOptions.find((o) => o.value === format)?.value ??
@@ -61,6 +69,38 @@ export default function RecorderStudio() {
 
   const activePreset =
     qualityOptions.find((o) => o.value === quality) ?? qualityOptions[0];
+
+  const { engine, snapshot, busy } = useRecorder();
+
+  const startRecording = () => {
+    if (!activeFormat) return;
+
+    const camera = sources.includes("camera");
+    const safe = getSafeCaptureSettings({
+      height: activePreset.height,
+      frameRate: Number.parseInt(String(fps), 10) || 30,
+      bitrate: activePreset.bitrate,
+      camera,
+    });
+
+    setLimitNote(
+      safe.limited
+        ? `Recording at up to ${safe.maxHeight}p, ${safe.frameRate} FPS to keep your device responsive.`
+        : "",
+    );
+
+    // No await before this call: screen sharing needs the click
+    void engine.start({
+      mimeType: getLightMimeType(activeFormat),
+      maxHeight: safe.maxHeight,
+      videoBitsPerSecond: safe.videoBitsPerSecond,
+      frameRate: safe.frameRate,
+      microphone: sources.includes("microphone"),
+      camera,
+      // Match this to the values in your audioOptions
+      systemAudio: String(audio).includes("system"),
+    });
+  };
 
   useEffect(() => {
     const verifyDefaults = async () => {
@@ -91,8 +131,15 @@ export default function RecorderStudio() {
 
   const requestSource = async (device: DeviceId) => {
     setPending(device);
-    const status = await ensureDevicePermission(device);
-    setPending(null);
+    let status: CheckStatus = "error";
+
+    try {
+      status = await ensureDevicePermission(device);
+    } catch (error) {
+      console.warn(`Could not access the ${device}`, error);
+    } finally {
+      setPending(null); // never leave the buttons locked
+    }
 
     if (status === "ready") {
       selectDevice(device);
@@ -107,14 +154,22 @@ export default function RecorderStudio() {
   };
 
   const toggleSource = (source: RecordingSource) => {
-    setNotice("");
+    if (source === "microphone") {
+      if (sources.includes("microphone")) {
+        setSources((current) =>
+          current.filter((item) => item !== "microphone"),
+        );
+      } else {
+        setShowMicrophoneOptions(true);
+      }
+
+      return;
+    }
 
     if (sources.includes(source)) {
       setSources((current) => current.filter((item) => item !== source));
-    } else if (source === "screen") {
-      setSources((current) => [...current, source]);
     } else {
-      void requestSource(source);
+      setSources((current) => [...current, source]);
     }
   };
 
@@ -145,13 +200,15 @@ export default function RecorderStudio() {
                     key={source.id}
                     type="button"
                     onClick={() => toggleSource(source.id)}
-                    disabled={pending !== null && source.id !== "screen"}
+                    disabled={
+                      busy || (pending !== null && source.id !== "screen")
+                    }
                     aria-pressed={selected}
                     aria-busy={waiting}
-                    className={`relative flex min-h-48 flex-col items-center justify-center rounded-2xl border-2 p-5 text-center transition-all disabled:cursor-wait ${
+                    className={`relative flex min-h-48 flex-col items-center justify-center rounded-2xl border-2 p-5 text-center transition-all disabled:cursor-not-allowed disabled:opacity-60 aria-busy:cursor-wait ${
                       selected
-                        ? "border-indigo-500 bg-indigo-50/50 shadow-sm"
-                        : "border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50"
+                        ? "border-indigo-500 bg-green-50/50 shadow-sm"
+                        : "border-slate-200 bg-white hover:border-green-300 hover:bg-slate-50"
                     }`}
                   >
                     <span
@@ -188,7 +245,10 @@ export default function RecorderStudio() {
               })}
             </div>
 
-            <section className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <fieldset
+              disabled={busy}
+              className="mt-8 min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white disabled:opacity-60"
+            >
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50/80 px-5 py-4 sm:px-6">
                 <div className="flex items-center gap-3">
                   <Settings2 className="h-7 w-7 text-slate-700" />
@@ -239,25 +299,6 @@ export default function RecorderStudio() {
                   </select>
                 </label>
 
-                <label className="block">
-                  <span className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
-                    <Mic className="h-5 w-5 text-indigo-600" />
-                    Audio
-                  </span>
-
-                  <select
-                    value={audio}
-                    onChange={(e) => setAudio(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
-                  >
-                    {audioOptions.map(({ value, label }) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-
                 <label className="block sm:col-span-2 lg:col-span-1">
                   <span className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
                     <FileVideo className="h-5 w-5 text-indigo-600" />
@@ -279,6 +320,103 @@ export default function RecorderStudio() {
                       </option>
                     ))}
                   </select>
+                </label>
+
+                <label className="block">
+                  <span className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-800">
+                    <Mic className="h-5 w-5 text-indigo-600" />
+                    Audio
+                  </span>
+
+                  <button
+                    value={audio}
+                    className="w-full rounded-xl border border-slate-200 bg-green-50 px-4 py-3 text-sm text-slate-800 outline-none"
+                    disabled
+                  >
+                    <option value={audio}>
+                      {sources.includes("microphone")
+                        ? audio.toUpperCase()
+                        : "No Audio"}
+                    </option>
+                  </button>
+
+                  {showMicrophoneOptions && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
+                      <div
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="microphone-title"
+                        className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h3
+                              id="microphone-title"
+                              className="text-lg font-bold text-slate-900"
+                            >
+                              Microphone settings
+                            </h3>
+                            <p className="mt-1 text-sm text-slate-500">
+                              Choose the audio device you want to use.
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => setShowMicrophoneOptions(false)}
+                            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                            aria-label="Close microphone settings"
+                          >
+                            <X className="h-5 w-5" />
+                          </button>
+                        </div>
+
+                        <div className="mt-5">
+                          <label
+                            htmlFor="microphone-device"
+                            className="mb-2 block text-sm font-semibold text-slate-700"
+                          >
+                            Audio input device
+                          </label>
+
+                          <select
+                            id="microphone-device"
+                            value={audio}
+                            onChange={(event) => setAudio(event.target.value)}
+                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                          >
+                            {audioOptions.map(({ value, label }) => (
+                              <option key={value} value={value}>
+                                {label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="mt-6 flex justify-end gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setShowMicrophoneOptions(false)}
+                            className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+                          >
+                            Cancel
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              void requestSource("microphone");
+                              setShowMicrophoneOptions(false);
+                            }}
+                            className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:opacity-50"
+                            disabled={audio === "none"}
+                          >
+                            Enable
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </label>
               </div>
 
@@ -307,7 +445,7 @@ export default function RecorderStudio() {
                   </div>
                 </div>
               )}
-            </section>
+            </fieldset>
 
             <div className="mt-6">
               <button
@@ -315,16 +453,12 @@ export default function RecorderStudio() {
                 disabled={
                   !sources.includes("screen") ||
                   !activeFormat ||
-                  pending !== null
+                  pending !== null ||
+                  busy
                 }
-                onClick={() =>
-                  setNotice(
-                    "Recording engine will be connected in the next implementation phase.",
-                  )
-                }
-                className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-5 text-lg font-bold text-white shadow-lg shadow-indigo-200 transition hover:from-indigo-700 hover:to-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+                onClick={startRecording}
+                className="flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-green-600 to-green-700 px-6 py-5 text-lg font-bold text-white shadow-lg shadow-indigo-200 transition hover:from-green-700 hover:to-green-600 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <Circle className="h-5 w-5 fill-white" />
                 Start Recording
               </button>
 
@@ -332,14 +466,16 @@ export default function RecorderStudio() {
                 Your browser will ask what you want to share.
               </p>
 
-              {notice && (
+              {busy && limitNote && (
                 <p
                   role="status"
-                  className="mt-3 text-center text-sm text-indigo-600"
+                  className="mt-3 text-center text-sm text-amber-700"
                 >
-                  {notice}
+                  {limitNote}
                 </p>
               )}
+
+              <RecordingPanel engine={engine} snapshot={snapshot} />
             </div>
           </div>
         </section>
